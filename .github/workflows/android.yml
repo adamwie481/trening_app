@@ -28,6 +28,12 @@ jobs:
           npx cap init "Dziennik treningowy" pl.trening.dziennik --web-dir web
           npx cap add android
           npx cap sync android
+          
+      - name: Napraw pasek stanu
+        run: |
+          f=android/app/src/main/res/values/styles.xml
+          sed -i '/<style name="AppTheme/a\        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>' "$f"
+          grep -c OptOut "$f"
 
       - name: Zbuduj APK
         working-directory: android
