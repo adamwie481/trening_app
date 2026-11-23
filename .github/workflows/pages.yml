@@ -24,6 +24,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+
+      - name: Wpisz numer wersji
+        run: |
+          V="${GITHUB_SHA::7}"
+          B="$(TZ=Europe/Warsaw date '+%d.%m.%Y %H:%M')"
+          sed -i "s/__BUILD__/$V/; s/__BUILT__/$B/" web/index.html
+          printf '{"v":"%s","built":"%s"}' "$V" "$B" > web/version.json
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web
