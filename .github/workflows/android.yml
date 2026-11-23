@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['web/**', '.github/workflows/android.yml']
+    paths: ['.github/workflows/android.yml']
 
 jobs:
   apk:
@@ -25,10 +25,13 @@ jobs:
         run: |
           npm init -y
           npm install @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7
-          npx cap init "Dziennik treningowy" pl.trening.dziennik --web-dir web
+          OWNER="$(echo "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')"
+          REPO="${GITHUB_REPOSITORY#*/}"
+          APP_URL="https://${OWNER}.github.io/${REPO}/" node -e "require('fs').writeFileSync('capacitor.config.json', JSON.stringify({appId:'pl.trening.dziennik',appName:'Dziennik treningowy',webDir:'web',server:{url:process.env.APP_URL,androidScheme:'https'}},null,2))"
+          cat capacitor.config.json
           npx cap add android
           npx cap sync android
-          
+
       - name: Napraw pasek stanu
         run: |
           f=android/app/src/main/res/values/styles.xml
