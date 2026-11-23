@@ -24,7 +24,7 @@ jobs:
       - name: Utwórz projekt Androida
         run: |
           npm init -y
-          npm install @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7
+          npm install @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7 @capacitor/filesystem@7 @capacitor/share@7
           OWNER="$(echo "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')"
           REPO="${GITHUB_REPOSITORY#*/}"
           APP_URL="https://${OWNER}.github.io/${REPO}/" node -e "require('fs').writeFileSync('capacitor.config.json', JSON.stringify({appId:'pl.trening.dziennik',appName:'Dziennik treningowy',webDir:'web',server:{url:process.env.APP_URL,androidScheme:'https'}},null,2))"
