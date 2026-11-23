@@ -223,39 +223,6 @@ var DEFAULT_EX=[
 ];
 var DEFAULT_CARDIO=['Rowerek stacjonarny','Bieżnia'];
 
-function S_(arr){return arr.map(function(p){return {r:p[0],kg:p[1]};});}
-function E_(id,arr,note){
-  var ex=DEFAULT_EX.filter(function(x){return x.id===id;})[0];
-  return {ex:id,name:ex.name,sets:S_(arr),note:note||''};
-}
-/* Notatki z papierowego notatnika: 02.11, 09.11, 16.11 */
-var SEED=[
-  {id:'w-2026-11-02-start',date:'2026-11-02',note:'',updated:0,
-   cardio:[{m:'Rowerek stacjonarny',km:3.5,min:8}],
-   entries:[
-     E_('biceps',[[15,6],[15,7],[15,8],[11,8]]),
-     E_('kaptury',[[15,6],[15,7],[15,8],[15,8]]),
-     E_('klatka-triceps',[[25,20],[13,25],[12,30],[9,35]]),
-     E_('rozpietki',[[25,30],[25,35],[13,40]])
-   ]},
-  {id:'w-2026-11-09-start',date:'2026-11-09',note:'',updated:0,
-   cardio:[{m:'Bieżnia',km:1.42,min:15}],
-   entries:[
-     E_('biceps',[[15,6],[15,7],[15,8],[15,8]]),
-     E_('kaptury',[[20,6],[15,7],[15,8],[20,8]]),
-     E_('sciaganie',[[20,22],[14,27],[8,32],[8,32]],'Pierwsza seria: 22 kg (50 lbs)'),
-     E_('grzbiet',[[40,35],[23,40],[20,45],[10,50]])
-   ]},
-  {id:'w-2026-11-16-start',date:'2026-11-16',note:'Miałem mało czasu',updated:0,
-   cardio:[{m:'Bieżnia',km:1,min:9.75}],
-   entries:[
-     E_('biceps',[[15,7],[15,8],[15,9],[15,9]]),
-     E_('kaptury',[[20,7],[15,8],[15,9],[10,9]]),
-     E_('grzbiet',[[26,40],[40,30],[30,35],[25,40]],'Bolał mnie lewy bark'),
-     E_('klatka-triceps',[[25,25],[17,30],[9,35],[7,40]])
-   ]}
-];
-
 /* ---------- helpers ---------- */
 var $=function(s,el){return (el||document).querySelector(s);};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
@@ -442,9 +409,9 @@ function logHTML(){
   var note=S.note?'<p class="card small" role="status">'+esc(S.note)+'</p>':'';
   if(!ws.length){
     if(!S.synced)return head+'<p class="muted">Wczytywanie…</p>'+note;
-    return head+note+'<div class="card empty"><h2>Pusty dziennik</h2><p>Dodaj pierwszy trening albo wczytaj swoje notatki z 2, 9 i 16 listopada.</p>'+
-      '<button class="btn primary block" data-act="import">Wczytaj moje notatki</button>'+
-      '<button class="btn block" data-act="new">Zacznij nowy trening</button></div>';
+    return head+note+'<div class="card empty"><h2>Pusty dziennik</h2><p>Dodaj pierwszy trening. Jeśli masz kopię zapasową, wczytasz ją w ustawieniach (ikona zębatki).</p>'+
+      '<button class="btn primary block" data-act="new">Zacznij nowy trening</button>'+
+      '<button class="btn block" data-act="open-settings">Otwórz ustawienia</button></div>';
   }
   var list=ws.map(function(w){
     var v=0,sc=0;
@@ -626,14 +593,13 @@ function exercisesHTML(){
 }
 
 function settingsHTML(){
-  var hasSeed=SEED.every(function(s){return S.workouts[s.id];});
   var head='<header class="top"><button class="btn sm" data-act="close-settings" aria-label="Wróć" style="align-self:flex-start">\u2039 Wróć</button><h1>Ustawienia</h1></header>';
   return head+
     '<section class="sec" style="margin-top:4px"><h2>Aplikacja</h2><p class="small muted">Wersja: '+(isDev?'lokalna (rozwojowa)':esc(APP_BUILT)+' ('+esc(APP_BUILD)+')')+'</p>'+
     '<div class="stack"><button class="btn block" data-act="check-update">Sprawdź aktualizacje</button></div><div id="updbox" class="stack" style="margin-top:10px" role="status" aria-live="polite"></div></section>'+
     '<section class="sec"><h2>Dane</h2><p class="small muted">'+'Treningi zapisują się w pamięci tej aplikacji na telefonie. Zrób kopię zapasową przed czyszczeniem danych przeglądarki lub zmianą telefonu.'+'</p>'+
-    '<div class="stack"><button class="btn block" data-act="export-json">Zapisz kopię zapasową (JSON)</button><button class="btn block" data-act="import-json">Wczytaj kopię zapasową</button><input type="file" id="imp-file" accept=".json,application/json" hidden><button class="btn block" data-act="export">Pobierz wszystko jako CSV</button>'+(hasSeed?'':'<button class="btn block" data-act="import">Wczytaj notatki z 2, 9 i 16 listopada</button>')+'</div>'+
-    '<p class="small" id="datamsg" role="status"></p></section>';
+    '<div class="stack"><button class="btn block" data-act="export-json">Zapisz kopię zapasową (JSON)</button><button class="btn block" data-act="import-json">Wczytaj kopię zapasową</button><input type="file" id="imp-file" accept=".json,application/json" hidden><button class="btn block" data-act="export">Pobierz wszystko jako CSV</button><div class="exrow"><button class="btn sm block" data-act="copy-backup">Skopiuj kopię jako tekst</button><button class="btn sm block" data-act="paste-backup">Wklej kopię z tekstu</button></div>'+'</div>'+
+    '<p class="small" id="datamsg" role="status"></p><div id="datapanel" class="stack"></div></section>';
 }
 
 function editorHTML(){
@@ -795,21 +761,6 @@ function confirmTap(el,fn){
 }
 
 /* ---------- actions ---------- */
-async function importSeed(){
-  SEED.forEach(function(s){
-    var o=clone(s);S.workouts[o.id]=o;
-    o.entries.forEach(function(en){if(!S.meta.exercises.some(function(x){return x.id===en.ex;}))S.meta.exercises.push({id:en.ex,name:en.name});});
-    o.cardio.forEach(function(c){if(S.meta.cardio.indexOf(c.m)<0)S.meta.cardio.push(c.m);});
-  });
-  render({keep:true});
-  try{
-    for(var i=0;i<SEED.length;i++){await Store.saveWorkout(S.workouts[SEED[i].id]);}
-    await Store.saveMeta();
-    var m=$('#datamsg');if(m)m.textContent='Wczytano 3 treningi.';
-  }catch(e){
-    var m2=$('#datamsg');if(m2)m2.textContent='Nie udało się zapisać wszystkich treningów.';
-  }
-}
 function csvEscape(v){v=v==null?'':String(v);return /[";\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
 async function exportCsv(){
   var rows=[['data','typ','nazwa','seria','powtórzenia','kg','km','minuty','notatka']];
@@ -822,9 +773,7 @@ async function exportCsv(){
     (w.cardio||[]).forEach(function(c){rows.push([w.date,'cardio',c.m,'','','',dispNum(c.km),fmtMin(c.min),w.note||'']);});
   });
   var csv='﻿'+rows.map(function(r){return r.map(csvEscape).join(';');}).join('\r\n');
-  var msg=$('#datamsg');
-  try{saveFile('dziennik-treningowy.csv',csv,'text/csv;charset=utf-8');if(msg)msg.textContent='Plik CSV zapisany w pobranych.';}
-  catch(e){if(msg)msg.textContent='Nie udało się zapisać pliku.';}
+  deliver('dziennik-treningowy.csv',csv,'text/csv;charset=utf-8');
 }
 async function checkUpdate(){
   var box=$('#updbox');if(!box)return;
@@ -856,18 +805,53 @@ function saveFile(name,data,type){
   var a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
   setTimeout(function(){URL.revokeObjectURL(url);},4000);
 }
-function exportJson(){
-  var msg=$('#datamsg');
-  try{
-    var data={app:'dziennik-treningowy',version:1,exported:new Date().toISOString(),workouts:allWorkouts(),meta:S.meta};
-    saveFile('dziennik-kopia-'+todayISO()+'.json',JSON.stringify(data,null,1),'application/json');
-    if(msg)msg.textContent='Kopia zapasowa zapisana w pobranych.';
-  }catch(e){if(msg)msg.textContent='Nie udało się zapisać kopii.';}
+function backupText(){
+  return JSON.stringify({app:'dziennik-treningowy',version:1,exported:new Date().toISOString(),workouts:allWorkouts(),meta:S.meta},null,1);
 }
-async function importJson(file){
-  var msg=$('#datamsg');
+function exportJson(){deliver('dziennik-kopia-'+todayISO()+'.json',backupText(),'application/json');}
+function dataPanel(html){var b=$('#datapanel');if(b)b.innerHTML=html;}
+function dataMsg(t){var m=$('#datamsg');if(m)m.textContent=t;}
+function showCopyPanel(text,intro){
+  dataPanel('<p class="small">'+esc(intro)+'</p><textarea class="txt" id="copytxt" rows="6" readonly>'+esc(text)+'</textarea><button class="btn block" data-act="copy-text">Skopiuj do schowka</button>');
+  var t=$('#copytxt');if(t){t.focus();t.select();}
+}
+function showPastePanel(){
+  dataPanel('<p class="small">Wklej tutaj zawartość kopii zapasowej (tekst zaczynający się od {"app":"dziennik-treningowy"…).</p><textarea class="txt" id="pastetxt" rows="6" placeholder="Wklej kopię zapasową"></textarea><button class="btn primary block" data-act="paste-import">Wczytaj wklejone dane</button>');
+  var t=$('#pastetxt');if(t)t.focus();
+}
+async function copyText(){
+  var t=$('#copytxt');if(!t)return;
+  var ok=false;
+  try{await navigator.clipboard.writeText(t.value);ok=true;}catch(e){}
+  if(!ok){try{t.focus();t.select();ok=document.execCommand('copy');}catch(e){}}
+  dataMsg(ok?'Skopiowano. Wklej do notatki lub e-maila.':'Nie udało się skopiować automatycznie. Zaznacz tekst i skopiuj ręcznie.');
+}
+/* Zapis pliku: natywne udostępnianie w APK, w przeglądarce zwykłe pobieranie. W razie braku obu: kopiowanie tekstu. */
+async function deliver(name,text,type){
+  var C=window.Capacitor,native=!!(C&&C.isNativePlatform&&C.isNativePlatform());
+  dataPanel('');
+  if(native){
+    var P=C.Plugins||{};
+    if(P.Filesystem&&P.Share){
+      try{
+        var w=await P.Filesystem.writeFile({path:name,data:text,directory:'CACHE',encoding:'utf8'});
+        await P.Share.share({title:name,url:w.uri,dialogTitle:'Zapisz lub wyślij plik'});
+        dataMsg('Wybierz, gdzie zapisać plik (np. Dysk Google, Pliki albo e-mail).');
+        return;
+      }catch(e){
+        if(e&&/cancel/i.test(String(e.message||e))){dataMsg('Anulowano.');return;}
+      }
+    }
+    dataMsg('');
+    showCopyPanel(text,'Zapis pliku nie jest tu dostępny. Skopiuj zawartość i wklej do notatki lub e-maila, a potem zapisz ją jako plik.');
+    return;
+  }
+  try{saveFile(name,text,type);dataMsg('Plik zapisany w pobranych. Jeśli go nie widzisz, użyj „Skopiuj kopię jako tekst”.');}
+  catch(e){dataMsg('');showCopyPanel(text,'Nie udało się zapisać pliku. Skopiuj zawartość ręcznie.');}
+}
+async function importJsonText(text){
   try{
-    var o=JSON.parse(await file.text());
+    var o=JSON.parse(text);
     if(!o||o.app!=='dziennik-treningowy'||!Array.isArray(o.workouts))throw new Error('format');
     var n=0;
     o.workouts.forEach(function(w){if(w&&w.id&&w.date){S.workouts[w.id]=w;n++;}});
@@ -878,10 +862,12 @@ async function importJson(file){
     }
     Store.persistLocal();
     render({keep:true});
-    var m2=$('#datamsg');if(m2)m2.textContent='Wczytano '+n+' '+plural(n,'trening','treningi','treningów')+' z kopii.';
-  }catch(e){if(msg)msg.textContent='To nie jest plik kopii z tej aplikacji.';}
+    dataMsg('Wczytano '+n+' '+plural(n,'trening','treningi','treningów')+' z kopii.');
+  }catch(e){dataMsg('To nie jest poprawna kopia z tej aplikacji.');}
 }
-
+async function importJson(file){
+  try{await importJsonText(await file.text());}catch(e){dataMsg('Nie udało się odczytać pliku. Użyj „Wklej kopię z tekstu”.');}
+}
 document.addEventListener('click',function(ev){
   var el=ev.target.closest('[data-act]');if(!el)return;
   var act=el.dataset.act,w=S.editing;
@@ -900,11 +886,14 @@ document.addEventListener('click',function(ev){
     case 'new':S.editing=newDraft();S.dirty=false;render();break;
     case 'open':S.editing=openDraft(el.dataset.id);S.dirty=false;render();break;
     case 'close':closeEditor();break;
-    case 'import':importSeed();break;
     case 'export':exportCsv();break;
     case 'export-json':exportJson();break;
     case 'check-update':checkUpdate();break;
     case 'apply-update':applyUpdate();break;
+    case 'copy-backup':showCopyPanel(backupText(),'Skopiuj ten tekst i zapisz go w notatce lub wyślij sobie e-mailem. Wczytasz go przyciskiem „Wklej kopię z tekstu”.');break;
+    case 'paste-backup':showPastePanel();break;
+    case 'copy-text':copyText();break;
+    case 'paste-import':{var pt=$('#pastetxt');if(pt)importJsonText(pt.value);break;}
     case 'import-json':{var fi=$('#imp-file');if(fi)fi.click();break;}
     case 'range':S.range=el.dataset.v;render({keep:true});break;
     case 'toggle':S.open[el.dataset.k]=!S.open[el.dataset.k];render({keep:true});break;
