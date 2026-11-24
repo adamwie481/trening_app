@@ -98,8 +98,11 @@ textarea.txt{resize:vertical;min-height:64px}
 .exhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
 .descprev{font-size:14px;color:var(--muted);margin:0 0 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .descbox{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-div.descro{min-height:68px;height:68px;overflow-y:auto;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface2);color:var(--ink);font-size:16px;line-height:24px;white-space:pre-wrap;overflow-wrap:anywhere}
-div.descro.empty{color:var(--muted)}
+.btn.ok{background:var(--up-bg);color:var(--up);border-color:var(--up)}
+.btn.ok[disabled]{background:var(--surface2);color:var(--muted);border-color:var(--line)}
+.descstate{color:var(--muted)}
+div.descro{max-height:44px;overflow-y:auto;padding:0;border:0;background:none;color:var(--ink);font-size:15px;line-height:22px;white-space:pre-wrap;overflow-wrap:anywhere}
+div.descro.empty{color:var(--muted);font-style:italic}
 textarea.desc1{min-height:68px;height:68px;overflow-y:auto;resize:none;padding-block:10px;line-height:24px}
 .exbtns{display:flex;gap:6px}
 .prevline{font-size:14px;color:var(--muted);margin-bottom:10px;overflow-wrap:anywhere}
@@ -190,6 +193,12 @@ textarea.desc1{min-height:68px;height:68px;overflow-y:auto;resize:none;padding-b
 .calday.pad{border:0;background:transparent;visibility:hidden}
 .calday.tr{background:var(--up-bg);border-color:var(--up);color:var(--up)}
 .calday.tr::after{content:"\2713";font-size:11px;line-height:1}
+.datebtn{white-space:nowrap;padding:0 12px;font-variant-numeric:tabular-nums}
+.sheet .caldet{border:0;background:none;padding:0;margin:0 0 12px}
+.calpop{padding-bottom:4px}
+.calday.sel{background:var(--accent);border-color:var(--accent);color:var(--on-accent,#fff)}
+.calday.sel.tr::after{color:inherit}
+.calgrid.dp .calday{min-height:44px}
 .calday.today{box-shadow:inset 0 0 0 2px var(--accent)}
 .calday[aria-pressed="true"]{outline:3px solid var(--accent);outline-offset:1px}
 .calsum{font-size:14px;color:var(--muted);text-align:center}
@@ -221,6 +230,46 @@ var KEY='dziennik-treningowy-v1';
 var APP_BUILD='__BUILD__',APP_BUILT='__BUILT__';
 var isDev=APP_BUILD.indexOf('__')===0;
 var THEME_KEY='dz-theme';
+var LANGS=['pl','en','de'],LOC={pl:'pl-PL',en:'en-GB',de:'de-DE'},LANG_KEY='dz-lang';
+var I18N={"Dziennik treningowy":["Workout Log","Trainingstagebuch"],"Nawigacja":["Navigation","Navigation"],"Treningi":["Workouts","Trainings"],"Kalendarz":["Calendar","Kalender"],"Postępy":["Progress","Fortschritt"],"Ćwiczenia":["Exercises","Übungen"],"+ Ćwiczenia":["+ Exercises","+ Übungen"],"+ Cardio":["+ Cardio","+ Cardio"],"Gotowe":["Done","Fertig"],"Wczytywanie…":["Loading…","Wird geladen…"],"Zamknij":["Close","Schließen"],"Wróć":["Back","Zurück"],"Usuń":["Delete","Löschen"],"Dodaj":["Add","Hinzufügen"],"Utwórz":["Create","Erstellen"],"Potwierdź":["Confirm","Bestätigen"],"Dzisiaj":["Today","Heute"],"Cardio":["Cardio","Cardio"],"Siłownia":["Gym","Fitnessstudio"],"{n} {w} · ostatni {d}":["{n} {w} · last {d}","{n} {w} · zuletzt {d}"],"Twoje treningi w jednym miejscu":["Your workouts in one place","Deine Trainings an einem Ort"],"Brak treningów":["No workouts yet","Noch keine Trainings"],"Dodaj pierwszy trening. Jeśli masz kopię zapasową, wczytasz ją w ustawieniach (ikona zębatki).":["Add your first workout. If you have a backup, you can restore it in settings (gear icon).","Füge dein erstes Training hinzu. Wenn du eine Sicherung hast, kannst du sie in den Einstellungen (Zahnrad-Symbol) laden."],"Zacznij nowy trening":["Start a new workout","Neues Training beginnen"],"Otwórz ustawienia":["Open settings","Einstellungen öffnen"],"Tylko cardio":["Cardio only","Nur Cardio"],"Nowy trening":["New workout","Neues Training"],"trening|treningi|treningów":["workout|workouts","Training|Trainings"],"ćwiczenie|ćwiczenia|ćwiczeń":["exercise|exercises","Übung|Übungen"],"seria|serie|serii":["set|sets","Satz|Sätze"],"serii|seriach|seriach":["set|sets","Satz|Sätzen"],"zapis|zapisy|zapisów":["entry|entries","Eintrag|Einträge"],"Poprzedni miesiąc":["Previous month","Vorheriger Monat"],"Następny miesiąc":["Next month","Nächster Monat"],"Dni miesiąca":["Days of the month","Tage des Monats"],"Pn":["Mo","Mo"],"Wt":["Tu","Di"],"Śr":["We","Mi"],"Cz":["Th","Do"],"Pt":["Fr","Fr"],"So":["Sa","Sa"],"Nd":["Su","So"],", dzień treningowy":[", workout day",", Trainingstag"],"Treningi w tym miesiącu: {n}":["Workouts this month: {n}","Trainings in diesem Monat: {n}"],"W tym miesiącu brak treningów":["No workouts this month","Keine Trainings in diesem Monat"],"zielony dzień z ptaszkiem to trening":["a green day with a check mark is a workout","ein grüner Tag mit Haken ist ein Training"],"Kliknij dzień, aby zobaczyć szczegóły.":["Tap a day to see the details.","Tippe auf einen Tag, um die Details zu sehen."],"Szczegóły dnia":["Day details","Tagesdetails"],"Brak treningu":["No workout","Kein Training"],"Dodaj trening w tym dniu":["Add a workout on this day","Training an diesem Tag hinzufügen"],"{n} kg tonażu":["{n} kg volume","{n} kg Volumen"],"Edytuj trening":["Edit workout","Training bearbeiten"],"Statystyki z Twoich treningów":["Statistics from your workouts","Statistiken aus deinen Trainings"],"Brak danych. Zapisz pierwszy trening, a tutaj pojawią się statystyki i trendy ćwiczeń.":["No data yet. Save your first workout and statistics and exercise trends will appear here.","Noch keine Daten. Speichere dein erstes Training, dann erscheinen hier Statistiken und Trends."],"Zakres":["Range","Zeitraum"],"30 dni":["30 days","30 Tage"],"90 dni":["90 days","90 Tage"],"Wszystko":["All","Alles"],"Podsumowanie":["Summary","Zusammenfassung"],"średnio na tydzień":["on average per week","im Schnitt pro Woche"],"kg tonażu w {n} {w}":["kg volume in {n} {w}","kg Volumen in {n} {w}"],"km cardio":["km cardio","km Cardio"],"Treningi w tygodniach":["Workouts per week","Trainings pro Woche"],"Liczba treningów w ostatnich 8 tygodniach":["Number of workouts in the last 8 weeks","Anzahl der Trainings in den letzten 8 Wochen"],"Ostatnio {d}: {v} kg tonażu":["Last on {d}: {v} kg volume","Zuletzt am {d}: {v} kg Volumen"]," (poprzednio {v})":[" (previous {v})"," (davor {v})"],"Najcięższa seria: {kg} kg ({d} kg)":["Heaviest set: {kg} kg ({d} kg)","Schwerster Satz: {kg} kg ({d} kg)"],"Od pierwszego zapisu: {p} tonażu":["Since first entry: {p} volume","Seit dem ersten Eintrag: {p} Volumen"],"Rekord: {kg} kg ({d})":["Record: {kg} kg ({d})","Rekord: {kg} kg ({d})"],"Szac. 1RM: ~{v} kg":["Est. 1RM: ~{v} kg","Gesch. 1RM: ~{v} kg"],"Ostatnio {d}: {v} km/h":["Last on {d}: {v} km/h","Zuletzt am {d}: {v} km/h"],"Ostatnio {d}":["Last on {d}","Zuletzt am {d}"],"▲ Progres {p}":["▲ Progress {p}","▲ Fortschritt {p}"],"▼ Regres {p}":["▼ Decline {p}","▼ Rückschritt {p}"],"● Bez zmian":["● No change","● Unverändert"],"Pierwszy zapis":["First entry","Erster Eintrag"],"Tonaż to suma powtórzeń × ciężar ze wszystkich serii. Progres i regres porównują dwa ostatnie treningi danego ćwiczenia (zmiana powyżej 2%). Szac. 1RM liczony wzorem Epleya z serii do 12 powtórzeń.":["Volume is the sum of reps × weight across all sets. Progress and decline compare the last two workouts of an exercise (a change above 2%). Est. 1RM is calculated with the Epley formula from sets of up to 12 reps.","Volumen ist die Summe aus Wiederholungen × Gewicht über alle Sätze. Fortschritt und Rückschritt vergleichen die letzten beiden Trainings einer Übung (Änderung über 2 %). Der geschätzte 1RM wird mit der Epley-Formel aus Sätzen mit bis zu 12 Wiederholungen berechnet."],"Twoja lista do wybierania w treningu":["Your list to choose from in a workout","Deine Auswahlliste für das Training"],"Ukryj opis":["Hide description","Beschreibung ausblenden"],"Pokaż opis":["Show description","Beschreibung anzeigen"],"Nazwa ćwiczenia":["Exercise name","Name der Übung"],"Opis ćwiczenia (np. maszyna, chwyt, ustawienie)":["Exercise description (e.g. machine, grip, setup)","Beschreibung der Übung (z. B. Gerät, Griff, Einstellung)"],"Nazwa urządzenia":["Machine name","Name des Geräts"],"Opis urządzenia (np. ustawienie, nachylenie, tempo)":["Machine description (e.g. setup, incline, pace)","Beschreibung des Geräts (z. B. Einstellung, Steigung, Tempo)"],"Nowe ćwiczenie":["New exercise","Neue Übung"],"Nowe urządzenie":["New machine","Neues Gerät"],"Usunięcie z listy nie kasuje historii. Dawne treningi zostają w treningach i statystykach.":["Removing from the list does not delete history. Past workouts stay in your workouts and statistics.","Das Entfernen aus der Liste löscht den Verlauf nicht. Frühere Trainings bleiben in den Trainings und Statistiken erhalten."],"Biceps":["Biceps","Bizeps"],"Kaptury":["Shrugs","Schulterheben"],"Klatka i triceps":["Chest and triceps","Brust und Trizeps"],"Rozpiętki":["Chest flyes","Fliegende"],"Ściąganie do klatki":["Lat pulldown","Latziehen"],"Grzbiet":["Back","Rücken"],"Rowerek stacjonarny":["Exercise bike","Heimtrainer"],"Bieżnia":["Treadmill","Laufband"],"Ustawienia":["Settings","Einstellungen"],"Wygląd":["Appearance","Darstellung"],"Motyw":["Theme","Design"],"Systemowy":["System","System"],"Jasny":["Light","Hell"],"Ciemny":["Dark","Dunkel"],"Systemowy dopasowuje się do ustawień telefonu.":["System follows your phone settings.","System folgt den Einstellungen deines Telefons."],"Język":["Language","Sprache"],"Aplikacja":["App","App"],"Wersja: {v}":["Version: {v}","Version: {v}"],"lokalna (rozwojowa)":["local (development)","lokal (Entwicklung)"],"Sprawdź aktualizacje":["Check for updates","Nach Updates suchen"],"Dane":["Data","Daten"],"Treningi zapisują się w pamięci tej aplikacji na telefonie. Zrób kopię zapasową przed czyszczeniem danych przeglądarki lub zmianą telefonu.":["Workouts are saved in this app's storage on your phone. Make a backup before clearing browser data or switching phones.","Trainings werden im Speicher dieser App auf deinem Telefon gesichert. Erstelle eine Sicherung, bevor du Browserdaten löschst oder das Telefon wechselst."],"Zapisz kopię zapasową (JSON)":["Save backup (JSON)","Sicherung speichern (JSON)"],"Wczytaj kopię zapasową":["Restore backup","Sicherung laden"],"Pobierz wszystko jako CSV":["Download everything as CSV","Alles als CSV herunterladen"],"Skopiuj kopię jako tekst":["Copy backup as text","Sicherung als Text kopieren"],"Wklej kopię z tekstu":["Paste backup from text","Sicherung aus Text einfügen"],"Sprawdzam…":["Checking…","Prüfe…"],"Nie udało się sprawdzić. Połącz się z internetem i spróbuj ponownie.":["Could not check. Connect to the internet and try again.","Prüfung fehlgeschlagen. Verbinde dich mit dem Internet und versuche es erneut."],"Dostępna nowa wersja: {v}.":["A new version is available: {v}.","Eine neue Version ist verfügbar: {v}."],"Zaktualizuj teraz":["Update now","Jetzt aktualisieren"],"Twoje treningi zostają bez zmian.":["Your workouts stay unchanged.","Deine Trainings bleiben unverändert."],"Masz najnowszą wersję ({v}).":["You have the latest version ({v}).","Du hast die neueste Version ({v})."],"Aktualizuję…":["Updating…","Aktualisiere…"],"Skopiuj do schowka":["Copy to clipboard","In die Zwischenablage kopieren"],"Wklej tutaj zawartość kopii zapasowej (tekst zaczynający się od {\"app\":\"dziennik-treningowy\"…).":["Paste the backup contents here (text starting with {\"app\":\"dziennik-treningowy\"…).","Füge hier den Inhalt der Sicherung ein (Text, der mit {\"app\":\"dziennik-treningowy\"… beginnt)."],"Wklej kopię zapasową":["Paste backup","Sicherung einfügen"],"Wczytaj wklejone dane":["Load pasted data","Eingefügte Daten laden"],"Skopiowano. Wklej do notatki lub e-maila.":["Copied. Paste it into a note or an email.","Kopiert. Füge es in eine Notiz oder E-Mail ein."],"Nie udało się skopiować automatycznie. Zaznacz tekst i skopiuj ręcznie.":["Could not copy automatically. Select the text and copy it manually.","Automatisches Kopieren fehlgeschlagen. Markiere den Text und kopiere ihn manuell."],"Zapisz lub wyślij plik":["Save or send the file","Datei speichern oder senden"],"Wybierz, gdzie zapisać plik (np. Dysk Google, Pliki albo e-mail).":["Choose where to save the file (e.g. Google Drive, Files or email).","Wähle, wo die Datei gespeichert werden soll (z. B. Google Drive, Dateien oder E-Mail)."],"Anulowano.":["Cancelled.","Abgebrochen."],"Zapis pliku nie jest tu dostępny. Skopiuj zawartość i wklej do notatki lub e-maila, a potem zapisz ją jako plik.":["Saving files is not available here. Copy the contents, paste them into a note or an email, then save it as a file.","Das Speichern von Dateien ist hier nicht verfügbar. Kopiere den Inhalt, füge ihn in eine Notiz oder E-Mail ein und speichere ihn dann als Datei."],"Plik zapisany w pobranych. Jeśli go nie widzisz, użyj „Skopiuj kopię jako tekst”.":["File saved to downloads. If you do not see it, use “Copy backup as text”.","Datei in den Downloads gespeichert. Wenn du sie nicht siehst, nutze „Sicherung als Text kopieren“."],"Nie udało się zapisać pliku. Skopiuj zawartość ręcznie.":["Could not save the file. Copy the contents manually.","Datei konnte nicht gespeichert werden. Kopiere den Inhalt manuell."],"Wczytano {n} {w} z kopii.":["Restored {n} {w} from the backup.","{n} {w} aus der Sicherung geladen."],"To nie jest poprawna kopia z tej aplikacji.":["This is not a valid backup from this app.","Das ist keine gültige Sicherung aus dieser App."],"Nie udało się odczytać pliku. Użyj „Wklej kopię z tekstu”.":["Could not read the file. Use “Paste backup from text”.","Datei konnte nicht gelesen werden. Nutze „Sicherung aus Text einfügen“."],"Skopiuj ten tekst i zapisz go w notatce lub wyślij sobie e-mailem. Wczytasz go przyciskiem „Wklej kopię z tekstu”.":["Copy this text and save it in a note or email it to yourself. You can restore it with the “Paste backup from text” button.","Kopiere diesen Text und speichere ihn in einer Notiz oder sende ihn dir per E-Mail. Du kannst ihn mit der Schaltfläche „Sicherung aus Text einfügen“ laden."],"data":["date","Datum"],"typ":["type","Typ"],"nazwa":["name","Name"],"seria":["set","Satz"],"powtórzenia":["reps","Wiederholungen"],"minuty":["minutes","Minuten"],"notatka":["note","Notiz"],"siłownia":["gym","Fitnessstudio"],"cardio":["cardio","Cardio"],"Wróć do treningów":["Back to workouts","Zurück zu den Trainings"],"Niezapisane zmiany":["Unsaved changes","Nicht gespeicherte Änderungen"],"Niezapisane zmiany. Kliknij zielony ptaszek, aby zatwierdzić.":["Unsaved changes. Tap the green check to confirm.","Nicht gespeicherte Änderungen. Tippe auf den grünen Haken, um zu bestätigen."],"Zapisano ✓":["Saved ✓","Gespeichert ✓"],"Zapisywanie…":["Saving…","Speichern…"],"Limit danych jest pełny. Usuń stare treningi.":["Data limit reached. Delete old workouts.","Datenlimit erreicht. Lösche alte Trainings."],"Nie zapisano. Zmień coś, aby spróbować ponownie.":["Not saved. Change something to try again.","Nicht gespeichert. Ändere etwas, um es erneut zu versuchen."],"Zmień datę treningu":["Change workout date","Trainingsdatum ändern"],"Notatka do treningu, np. miałem mało czasu":["Workout note, e.g. I was short on time","Notiz zum Training, z. B. ich hatte wenig Zeit"],"Notatka do treningu":["Workout note","Notiz zum Training"],"Opis: {name}":["Description: {name}","Beschreibung: {name}"],"Zatwierdź opis":["Confirm description","Beschreibung bestätigen"],"Opis urządzenia":["Machine description","Gerätebeschreibung"],"Opis ćwiczenia":["Exercise description","Übungsbeschreibung"],"Brak opisu. Dodasz go w zakładce Ćwiczenia.":["No description. You can add one in the Exercises tab.","Keine Beschreibung. Du kannst sie im Tab „Übungen“ hinzufügen."],"Poprzednio {d}: {v}":["Previous {d}: {v}","Vorher {d}: {v}"],"czas (min)":["time (min)","Zeit (min)"],"Wybierz ćwiczenia z listy. Możesz zaznaczyć kilka naraz i uzupełniać je naprzemiennie.":["Choose exercises from the list. You can select several at once and fill them in alternately.","Wähle Übungen aus der Liste. Du kannst mehrere gleichzeitig auswählen und abwechselnd ausfüllen."],"Wybierz ćwiczenia":["Choose exercises","Übungen auswählen"],"powt.":["reps","Wdh."],"Powtórzenia, seria {n}":["Reps, set {n}","Wiederholungen, Satz {n}"],"Ciężar w kg, seria {n}":["Weight in kg, set {n}","Gewicht in kg, Satz {n}"],"Usuń serię {n}":["Delete set {n}","Satz {n} löschen"],"+ Seria":["+ Set","+ Satz"],"Wstaw z poprzedniego":["Copy from previous","Vom letzten übernehmen"],"Notatka do ćwiczenia, np. bolał bark":["Exercise note, e.g. my shoulder hurt","Notiz zur Übung, z. B. Schulter tat weh"],"Notatka do ćwiczenia":["Exercise note","Notiz zur Übung"],"Usuń cały trening":["Delete the whole workout","Ganzes Training löschen"],"Wybierz datę treningu":["Choose workout date","Trainingsdatum wählen"],"Data treningu":["Workout date","Trainingsdatum"],", jest już trening":[", already has a workout",", hat bereits ein Training"],"Zielone dni mają już zapisany trening.":["Green days already have a workout saved.","Grüne Tage haben bereits ein gespeichertes Training."],"w treningu":["in workout","im Training"],"Dodaj cardio":["Add cardio","Cardio hinzufügen"],"Dodaj ćwiczenia":["Add exercises","Übungen hinzufügen"],"Dodaj do treningu":["Add to workout","Zum Training hinzufügen"],"Dodaj do treningu ({n})":["Add to workout ({n})","Zum Training hinzufügen ({n})"],"Nie można teraz połączyć się z zapisem. Widoczne dane mogą być nieaktualne.":["Cannot connect to storage right now. The data shown may be out of date.","Speicher ist gerade nicht erreichbar. Die angezeigten Daten sind möglicherweise veraltet."],"Zapis w koncie jest niedostępny ({code}). Dane zostają tylko w tej karcie.":["Account storage is unavailable ({code}). Data stays only in this tab.","Der Kontospeicher ist nicht verfügbar ({code}). Die Daten bleiben nur in diesem Tab."],"błąd":["error","Fehler"]};
+function detectLang(){
+  try{var v=localStorage.getItem(LANG_KEY);if(LANGS.indexOf(v)>-1)return v;}catch(e){}
+  var n=String((navigator.languages&&navigator.languages[0])||navigator.language||'en').slice(0,2).toLowerCase();
+  return LANGS.indexOf(n)>-1?n:'en';
+}
+var LANG=detectLang();
+function tl(k,l){var r=I18N[k];return l==='pl'||!r?k:r[l==='en'?0:1];}
+function t(k,v){
+  var x=tl(k,LANG);
+  if(v)x=x.replace(/\{(\w+)\}/g,function(m,n){return v[n]!=null?v[n]:m;});
+  return x;
+}
+try{document.documentElement.lang=LANG;document.title=t('Dziennik treningowy');}catch(e){}
+function descGet(k){
+  var i=k.indexOf(':'),kind=k.slice(0,i),key=k.slice(i+1);
+  if(kind==='ex'){var e=S.meta.exercises.filter(function(x){return x.id===key;})[0];return e&&e.desc?e.desc:'';}
+  return (S.meta.cardioDesc&&S.meta.cardioDesc[key])||'';
+}
+function descSet(k,v){
+  var i=k.indexOf(':'),kind=k.slice(0,i),key=k.slice(i+1);
+  if(kind==='ex'){var e=S.meta.exercises.filter(function(x){return x.id===key;})[0];if(e){if(v)e.desc=v;else delete e.desc;}}
+  else{S.meta.cardioDesc=S.meta.cardioDesc||{};if(v)S.meta.cardioDesc[key]=v;else delete S.meta.cardioDesc[key];}
+  Store.saveMeta().catch(function(){});
+}
+function descField(k,name,id,ph){
+  var saved=descGet(k),has=S.descDraft[k]!==undefined,val=has?S.descDraft[k]:saved,dirty=has&&val.trim()!==saved;
+  var state=dirty?t('Niezapisane zmiany. Kliknij zielony ptaszek, aby zatwierdzić.'):(S.descSaved[k]?t('Zapisano \u2713'):'');
+  return '<div class="exrow" style="align-items:stretch"><textarea class="txt desc1" id="'+id+'" data-draft="'+esc(k)+'" rows="2" maxlength="400" style="flex:1;min-width:0" placeholder="'+esc(ph)+'" aria-label="'+esc(t('Opis: {name}',{name:name}))+'">'+esc(val)+'</textarea>'+
+    '<button class="btn ok" data-act="confirm-desc" data-k="'+esc(k)+'" aria-label="'+esc(t('Zatwierdź opis'))+'" style="width:52px;height:68px;font-size:24px;padding:0"'+(dirty?'':' disabled')+'>\u2713</button></div>'+
+    '<p class="small descstate" data-for="'+esc(k)+'"'+(state?'':' hidden')+'>'+state+'</p>';
+}
+function refreshDesc(k,ta){
+  var saved=descGet(k),val=S.descDraft[k]!==undefined?S.descDraft[k]:saved,dirty=val.trim()!==saved;
+  var root=ta.parentNode.parentNode;
+  var btn=root.querySelector('button[data-act="confirm-desc"]'),st=root.querySelector('.descstate');
+  if(btn)btn.disabled=!dirty;
+  if(st){st.hidden=!dirty;st.textContent=dirty?t('Niezapisane zmiany. Kliknij zielony ptaszek, aby zatwierdzić.'):'';}
+}
 function getTheme(){try{var t=localStorage.getItem(THEME_KEY);return t==='light'||t==='dark'?t:'auto';}catch(e){return 'auto';}}
 function applyTheme(t){
   var r=document.documentElement;
@@ -228,16 +277,27 @@ function applyTheme(t){
   var m=document.querySelector('meta[name="theme-color"]');
   if(m)m.setAttribute('content',t==='dark'?'#0C1016':t==='light'?'#E8EBF0':'#1F5FBF');
 }
+function sameList(a,b){return a.length===b.length&&a.every(function(x,i){return x===b[i];});}
+function metaIsDefault(){
+  var m=S.meta;if(Object.keys(S.workouts).length)return false;
+  if(m.exercises.some(function(e){return e.desc;})||Object.keys(m.cardioDesc||{}).length)return false;
+  return LANGS.some(function(l){
+    var de=defEx(l),dc=defCardio(l);
+    return sameList(m.exercises.map(function(e){return e.id+'|'+e.name;}),de.map(function(e){return e.id+'|'+e.name;}))&&sameList(m.cardio,dc);
+  });
+}
+function setLang(l){
+  if(LANGS.indexOf(l)<0||l===LANG)return;
+  var swap=metaIsDefault();
+  try{localStorage.setItem(LANG_KEY,l);}catch(e){}
+  LANG=l;
+  try{document.documentElement.lang=LANG;document.title=t('Dziennik treningowy');}catch(e){}
+  if(swap){S.meta.exercises=defEx();S.meta.cardio=defCardio();Store.persistLocal();}
+}
 function setTheme(t){try{if(t==='auto')localStorage.removeItem(THEME_KEY);else localStorage.setItem(THEME_KEY,t);}catch(e){}applyTheme(t);}
-var DEFAULT_EX=[
-  {id:'biceps',name:'Biceps'},
-  {id:'kaptury',name:'Kaptury'},
-  {id:'klatka-triceps',name:'Klatka i triceps'},
-  {id:'rozpietki',name:'Rozpiętki'},
-  {id:'sciaganie',name:'Ściąganie do klatki'},
-  {id:'grzbiet',name:'Grzbiet'}
-];
-var DEFAULT_CARDIO=['Rowerek stacjonarny','Bieżnia'];
+var DEF={ex:[['biceps','Biceps'],['kaptury','Kaptury'],['klatka-triceps','Klatka i triceps'],['rozpietki','Rozpiętki'],['sciaganie','Ściąganie do klatki'],['grzbiet','Grzbiet']],cardio:['Rowerek stacjonarny','Bieżnia']};
+function defEx(l){l=l||LANG;return DEF.ex.map(function(x){return {id:x[0],name:tl(x[1],l)};});}
+function defCardio(l){l=l||LANG;return DEF.cardio.map(function(x){return tl(x,l);});}
 
 /* ---------- helpers ---------- */
 var $=function(s,el){return (el||document).querySelector(s);};
@@ -246,22 +306,22 @@ var pad=function(n){return String(n).padStart(2,'0');};
 var iso=function(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());};
 var parseD=function(s){var p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);};
 var dm=function(s){var d=parseD(s);return pad(d.getDate())+'.'+pad(d.getMonth()+1);};
-var wdName=function(s){return parseD(s).toLocaleDateString('pl-PL',{weekday:'short'});};
+var wdName=function(s){return parseD(s).toLocaleDateString(LOC[LANG],{weekday:'short'});};
 var todayISO=function(){return iso(new Date());};
 var addDays=function(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x;};
 var dayDiff=function(a,b){return Math.round((b-a)/86400000);};
 var weekStart=function(d){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-((x.getDay()+6)%7));return x;};
-var nf=new Intl.NumberFormat('pl-PL',{maximumFractionDigits:1});
-var fmt=function(n){return nf.format(n);};
+var nfc={};
+var fmt=function(n){var l=LOC[LANG];return (nfc[l]=nfc[l]||new Intl.NumberFormat(l,{maximumFractionDigits:1})).format(n);};
 var num=function(v){if(v===''||v==null)return null;var n=Number(String(v).replace(',','.'));return isFinite(n)?n:null;};
-var dispNum=function(n){return n==null?'':String(n).replace('.',',');};
+var dispNum=function(n){return n==null?'':LANG==='en'?String(n):String(n).replace('.',',');};
 var parseMin=function(v){
   if(v==null)return null;var s=String(v).trim();if(!s)return null;
   if(s.indexOf(':')>-1){var p=s.split(':');var a=Number(p[0]),b=Number(p[1]||0);return isFinite(a)&&isFinite(b)?a+b/60:null;}
   return num(s);
 };
 var fmtMin=function(m){if(m==null)return '';var t=Math.round(m*60);var mm=Math.floor(t/60),ss=t%60;return ss?mm+':'+pad(ss):String(mm);};
-var plural=function(n,a,b,c){var m=n%10,h=n%100;return n===1?a:(m>=2&&m<=4&&(h<10||h>=20))?b:c;};
+var plural=function(n,a,b,c){if(LANG!=='pl'){var r=I18N[a+'|'+b+'|'+c],f=(r?r[LANG==='en'?0:1]:a).split('|');return n===1?f[0]:f[1];}var m=n%10,h=n%100;return n===1?a:(m>=2&&m<=4&&(h<10||h>=20))?b:c;};
 var pct=function(p){var r=Math.round(Math.abs(p)*100);return (p>0?'+':p<0?'−':'')+r+'%';};
 var rid=function(){return Math.random().toString(36).slice(2,6);};
 var slug=function(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'cw';};
@@ -269,10 +329,10 @@ var clone=function(o){return JSON.parse(JSON.stringify(o));};
 
 /* ---------- state ---------- */
 var S={
-  workouts:{}, meta:{exercises:clone(DEFAULT_EX),cardio:DEFAULT_CARDIO.slice()},
+  workouts:{}, meta:{exercises:defEx(),cardio:defCardio(),cardioDesc:{}},
   ready:false, synced:false, tab:'log', editing:null, sheet:null, range:'all', open:{}, dirty:false, note:'', mode:'local'
 };
-S.descOpen={};S.descOpenList={};
+S.descOpen={};S.descOpenList={};S.descDraft={};S.descSaved={};
 (function(){var n=new Date();S.cal={y:n.getFullYear(),m:n.getMonth(),sel:null};})();
 var view=$('#view'),navEl=$('#nav'),sheetRoot=$('#sheet-root');
 
@@ -286,7 +346,7 @@ var Store={
       try{
         this.col=db.collection('data/users/'+uid);
         this.mode='cloud';S.mode='cloud';
-        this.timer=setTimeout(function(){if(!S.synced){S.note='Nie można teraz połączyć się z zapisem. Widoczne dane mogą być nieaktualne.';S.ready=true;softRender();}},10000);
+        this.timer=setTimeout(function(){if(!S.synced){S.note=t('Nie można teraz połączyć się z zapisem. Widoczne dane mogą być nieaktualne.');S.ready=true;softRender();}},10000);
         this.col.onSnapshot(function(snap){
           var ws={},meta=null;
           snap.docs.forEach(function(d){
@@ -299,7 +359,7 @@ var Store={
           if(!snap.metadata.fromCache){S.synced=true;S.note='';clearTimeout(Store.timer);}
           S.ready=true;softRender();
         },function(err){
-          S.note='Zapis w koncie jest niedostępny ('+(err&&err.code?err.code:'błąd')+'). Dane zostają tylko w tej karcie.';
+          S.note=t('Zapis w koncie jest niedostępny ({code}). Dane zostają tylko w tej karcie.',{code:(err&&err.code?err.code:t('błąd'))});
           S.synced=true;S.ready=true;Store.mode='local';S.mode='local';softRender();
         });
         return;
@@ -336,9 +396,11 @@ var Store={
   }
 };
 function normMeta(m){
-  var ex=Array.isArray(m.exercises)?m.exercises.filter(function(x){return x&&x.id&&x.name;}):clone(DEFAULT_EX);
-  var ca=Array.isArray(m.cardio)?m.cardio.filter(Boolean):DEFAULT_CARDIO.slice();
-  return {exercises:ex,cardio:ca};
+  var ex=Array.isArray(m.exercises)?m.exercises.filter(function(x){return x&&x.id&&x.name;}):defEx();
+  var ca=Array.isArray(m.cardio)?m.cardio.filter(Boolean):defCardio();
+  var cd={};
+  if(m.cardioDesc&&typeof m.cardioDesc==='object'){Object.keys(m.cardioDesc).forEach(function(k){if(typeof m.cardioDesc[k]==='string'&&m.cardioDesc[k])cd[k]=m.cardioDesc[k];});}
+  return {exercises:ex,cardio:ca,cardioDesc:cd};
 }
 
 /* ---------- data helpers ---------- */
@@ -376,11 +438,11 @@ function trendOf(list,val){
   if(n>=3){var f=val(list[0]);if(f>0)total=(a-f)/f;}
   return {kind:kind,pct:p,total:total};
 }
-function badge(t){
-  if(t.kind==='up')return '<span class="badge up">▲ Progres '+pct(t.pct)+'</span>';
-  if(t.kind==='down')return '<span class="badge down">▼ Regres '+pct(t.pct)+'</span>';
-  if(t.kind==='flat')return '<span class="badge flat">● Bez zmian</span>';
-  return '<span class="badge new">Pierwszy zapis</span>';
+function badge(b){
+  if(b.kind==='up')return '<span class="badge up">'+esc(t('▲ Progres {p}',{p:pct(b.pct)}))+'</span>';
+  if(b.kind==='down')return '<span class="badge down">'+esc(t('▼ Regres {p}',{p:pct(b.pct)}))+'</span>';
+  if(b.kind==='flat')return '<span class="badge flat">'+esc(t('● Bez zmian'))+'</span>';
+  return '<span class="badge new">'+esc(t('Pierwszy zapis'))+'</span>';
 }
 function spark(vals,kind){
   vals=vals.slice(-12);var n=vals.length;if(!n)return '';
@@ -420,9 +482,9 @@ function icon(name){
 }
 function navHTML(){
   if(S.editing){
-    return '<div class="in"><button class="btn" data-act="open-sheet">+ Ćwiczenia</button><button class="btn" data-act="open-sheet-cardio">+ Cardio</button><button class="btn primary" data-act="close">Gotowe</button></div>';
+    return '<div class="in"><button class="btn" data-act="open-sheet">'+esc(t('+ Ćwiczenia'))+'</button><button class="btn" data-act="open-sheet-cardio">'+esc(t('+ Cardio'))+'</button><button class="btn primary" data-act="close">'+esc(t('Gotowe'))+'</button></div>';
   }
-  var tabs=[['log','Dziennik'],['cal','Kalendarz'],['stats','Postępy'],['ex','Ćwiczenia']];
+  var tabs=[['log',t('Treningi')],['cal',t('Kalendarz')],['stats',t('Postępy')],['ex',t('Ćwiczenia')]];
   return '<div class="in">'+tabs.map(function(t){
     return '<button class="tab" data-act="tab" data-v="'+t[0]+'"'+(!S.settings&&S.tab===t[0]?' aria-current="page"':'')+'>'+icon(t[0])+'<span>'+t[1]+'</span></button>';
   }).join('')+'</div>';
@@ -430,13 +492,13 @@ function navHTML(){
 
 function logHTML(){
   var ws=allWorkouts().slice().reverse();
-  var head='<header class="top"><h1>Dziennik</h1><p class="muted">'+(ws.length?ws.length+' '+plural(ws.length,'trening','treningi','treningów')+' · ostatni '+dm(ws[0].date):'Twoje treningi w jednym miejscu')+'</p></header>';
+  var head='<header class="top"><h1>'+esc(t('Treningi'))+'</h1><p class="muted">'+esc(ws.length?t('{n} {w} · ostatni {d}',{n:ws.length,w:plural(ws.length,'trening','treningi','treningów'),d:dm(ws[0].date)}):t('Twoje treningi w jednym miejscu'))+'</p></header>';
   var note=S.note?'<p class="card small" role="status">'+esc(S.note)+'</p>':'';
   if(!ws.length){
-    if(!S.synced)return head+'<p class="muted">Wczytywanie…</p>'+note;
-    return head+note+'<div class="card empty"><h2>Pusty dziennik</h2><p>Dodaj pierwszy trening. Jeśli masz kopię zapasową, wczytasz ją w ustawieniach (ikona zębatki).</p>'+
-      '<button class="btn primary block" data-act="new">Zacznij nowy trening</button>'+
-      '<button class="btn block" data-act="open-settings">Otwórz ustawienia</button></div>';
+    if(!S.synced)return head+'<p class="muted">'+esc(t('Wczytywanie…'))+'</p>'+note;
+    return head+note+'<div class="card empty"><h2>'+esc(t('Brak treningów'))+'</h2><p>'+esc(t('Dodaj pierwszy trening. Jeśli masz kopię zapasową, wczytasz ją w ustawieniach (ikona zębatki).'))+'</p>'+
+      '<button class="btn primary block" data-act="new">'+esc(t('Zacznij nowy trening'))+'</button>'+
+      '<button class="btn block" data-act="open-settings">'+esc(t('Otwórz ustawienia'))+'</button></div>';
   }
   var list=ws.map(function(w){
     var v=0,sc=0;
@@ -450,9 +512,9 @@ function logHTML(){
     var enotes=(w.entries||[]).filter(function(en){return en.note;}).map(function(en){return exName(en.ex,en.name)+': '+en.note;});
     var notes=[w.note].concat(enotes).filter(Boolean).join(' · ');
     return '<button class="wcard" data-act="open" data-id="'+esc(w.id)+'"><div class="wdate"><span class="d">'+dm(w.date)+'</span><span class="wd">'+esc(wdName(w.date))+'</span></div>'+
-      '<div class="wbody"><div class="wnames">'+esc(names||'Tylko cardio')+'</div>'+(meta?'<div class="wmeta">'+meta+'</div>':'')+cardio+(notes?'<div class="wnote">'+esc(notes)+'</div>':'')+'</div><span class="chev" aria-hidden="true">›</span></button>';
+      '<div class="wbody"><div class="wnames">'+esc(names||t('Tylko cardio'))+'</div>'+(meta?'<div class="wmeta">'+meta+'</div>':'')+cardio+(notes?'<div class="wnote">'+esc(notes)+'</div>':'')+'</div><span class="chev" aria-hidden="true">›</span></button>';
   }).join('');
-  return head+note+'<div class="stack"><button class="btn primary block" data-act="new">Nowy trening</button>'+list+'</div>';
+  return head+note+'<div class="stack"><button class="btn primary block" data-act="new">'+esc(t('Nowy trening'))+'</button>'+list+'</div>';
 }
 
 function weekBars(ws){
@@ -461,7 +523,7 @@ function weekBars(ws){
   ws.forEach(function(w){var k=iso(weekStart(parseD(w.date)));weeks.forEach(function(x){if(x.k===k)x.n++;});});
   var max=Math.max(2,Math.max.apply(null,weeks.map(function(x){return x.n;})));
   var W=320,H=124,pb=24,pt=18,step=40,bw=26,x0=(W-8*step)/2+(step-bw)/2;
-  var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Liczba treningów w ostatnich 8 tygodniach">';
+  var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(t('Liczba treningów w ostatnich 8 tygodniach'))+'">';
   s+='<line class="base" x1="0" x2="'+W+'" y1="'+(H-pb)+'" y2="'+(H-pb)+'"/>';
   weeks.forEach(function(x,i){
     var cx=x0+i*step+bw/2,h=x.n/max*(H-pb-pt),y=H-pb-h,cur=i===7;
@@ -476,7 +538,7 @@ function dayDetail(d){
   var ws=allWorkouts().filter(function(w){return w.date===d;});
   var title=wdName(d)+' '+dm(d)+'.'+parseD(d).getFullYear();
   if(!ws.length){
-    return '<div class="card caldet"><h3>'+esc(title)+'</h3><p class="calnone">Brak treningu</p><button class="btn block" data-act="cal-new" data-d="'+d+'">Dodaj trening w tym dniu</button></div>';
+    return '<div class="card caldet"><h3>'+esc(title)+'</h3><p class="calnone">'+esc(t('Brak treningu'))+'</p><button class="btn block" data-act="cal-new" data-d="'+d+'">'+esc(t('Dodaj trening w tym dniu'))+'</button></div>';
   }
   return ws.map(function(w){
     var out='<div class="card caldet"><h3>'+esc(title)+'</h3>';
@@ -487,38 +549,45 @@ function dayDetail(d){
     });
     (w.entries||[]).forEach(function(en){
       var v=validSets(en.sets),ton=0;v.forEach(function(x){ton+=x.r*x.kg;});
-      out+='<div class="dex"><b>'+esc(exName(en.ex,en.name))+'</b>'+(v.length?'<span class="sets">'+esc(setsText(v))+'</span><span class="muted">'+fmt(ton)+' kg tonażu</span>':'')+(en.note?'<span class="wnote">'+esc(en.note)+'</span>':'')+'</div>';
+      out+='<div class="dex"><b>'+esc(exName(en.ex,en.name))+'</b>'+(v.length?'<span class="sets">'+esc(setsText(v))+'</span><span class="muted">'+esc(t('{n} kg tonażu',{n:fmt(ton)}))+'</span>':'')+(en.note?'<span class="wnote">'+esc(en.note)+'</span>':'')+'</div>';
     });
-    out+='<button class="btn block" data-act="open" data-id="'+esc(w.id)+'">Edytuj trening</button></div>';
+    out+='<button class="btn block" data-act="open" data-id="'+esc(w.id)+'">'+esc(t('Edytuj trening'))+'</button></div>';
     return out;
   }).join('');
+}
+function calPopupHTML(){
+  var d=S.cal.sel;
+  return '<div class="scrim" data-act="cal-close"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="'+esc(t('Szczegóły dnia'))+'"><div class="in">'+
+    '<div class="head"><h2>'+esc(t('Szczegóły dnia'))+'</h2><button class="btn sm ghost" data-act="cal-close">'+esc(t('Zamknij'))+'</button></div>'+
+    '<div class="list calpop">'+dayDetail(d)+'</div><div style="height:12px"></div></div></div>';
 }
 function calendarHTML(){
   var c=S.cal,y=c.y,m=c.m;
   var byDate={},count=0;
   allWorkouts().forEach(function(w){(byDate[w.date]=byDate[w.date]||[]).push(w);});
   var first=new Date(y,m,1),lead=(first.getDay()+6)%7,days=new Date(y,m+1,0).getDate(),today=todayISO();
-  var h='<header class="top"><h1>Kalendarz</h1></header>';
-  var label=first.toLocaleDateString('pl-PL',{month:'long',year:'numeric'});
-  h+='<div class="calhead"><button class="btn" data-act="cal-prev" aria-label="Poprzedni miesiąc">\u2039</button><div class="mon" aria-live="polite">'+esc(label)+'</div><button class="btn" data-act="cal-next" aria-label="Następny miesiąc">\u203A</button></div>';
-  h+='<div class="stack" style="margin-top:12px"><div class="calgrid" role="group" aria-label="Dni miesiąca">';
-  ['Pn','Wt','Śr','Cz','Pt','So','Nd'].forEach(function(n){h+='<div class="calwd">'+n+'</div>';});
+  var h='<header class="top"><h1>'+esc(t('Kalendarz'))+'</h1></header>';
+  var label=first.toLocaleDateString(LOC[LANG],{month:'long',year:'numeric'});
+  h+='<div class="calhead"><button class="btn" data-act="cal-prev" aria-label="'+esc(t('Poprzedni miesiąc'))+'">\u2039</button><div class="mon" aria-live="polite">'+esc(label)+'</div><button class="btn" data-act="cal-next" aria-label="'+esc(t('Następny miesiąc'))+'">\u203A</button></div>';
+  h+='<div class="stack" style="margin-top:12px"><div class="calgrid" role="group" aria-label="'+esc(t('Dni miesiąca'))+'">';
+  ['Pn','Wt','Śr','Cz','Pt','So','Nd'].forEach(function(n){h+='<div class="calwd">'+esc(t(n))+'</div>';});
   for(var i=0;i<lead;i++)h+='<span class="calday pad"></span>';
   for(var d=1;d<=days;d++){
     var ds=y+'-'+pad(m+1)+'-'+pad(d),tr=!!byDate[ds];
     if(tr)count++;
-    h+='<button class="calday'+(tr?' tr':'')+(ds===today?' today':'')+'" data-act="cal-day" data-d="'+ds+'" aria-pressed="'+(c.sel===ds)+'" aria-label="'+d+' '+esc(label)+(tr?', dzień treningowy':'')+'">'+d+'</button>';
+    h+='<button class="calday'+(tr?' tr':'')+(ds===today?' today':'')+'" data-act="cal-day" data-d="'+ds+'" aria-pressed="'+(c.sel===ds)+'" aria-label="'+d+' '+esc(label)+(tr?esc(t(', dzień treningowy')):'')+'">'+d+'</button>';
   }
-  h+='</div><p class="calsum">'+(count?'Treningi w tym miesiącu: '+count:'W tym miesiącu brak treningów')+' \u00B7 zielony dzień z ptaszkiem to trening</p>';
-  h+='<button class="btn ghost sm" data-act="cal-today" style="align-self:center">Dzisiaj</button>';
-  h+=c.sel?dayDetail(c.sel):'<p class="muted" style="text-align:center">Kliknij dzień, aby zobaczyć szczegóły.</p>';
+  for(var t2=lead+days;t2<42;t2++)h+='<span class="calday pad"></span>';
+  h+='</div><p class="calsum">'+esc(count?t('Treningi w tym miesiącu: {n}',{n:count}):t('W tym miesiącu brak treningów'))+' \u00B7 '+esc(t('zielony dzień z ptaszkiem to trening'))+'</p>';
+  h+='<button class="btn ghost sm" data-act="cal-today" style="align-self:center">'+esc(t('Dzisiaj'))+'</button>';
+  h+='<p class="muted" style="text-align:center">'+esc(t('Kliknij dzień, aby zobaczyć szczegóły.'))+'</p>';
   return h+'</div>';
 }
 
 function statsHTML(){
   var ws=allWorkouts();
-  var head='<header class="top"><h1>Postępy</h1><p class="muted">Statystyki z Twojego dziennika</p></header>';
-  if(!ws.length)return head+'<div class="card empty"><p>Brak danych. Zapisz pierwszy trening, a tutaj pojawią się statystyki i trendy ćwiczeń.</p></div>';
+  var head='<header class="top"><h1>'+esc(t('Postępy'))+'</h1><p class="muted">'+esc(t('Statystyki z Twoich treningów'))+'</p></header>';
+  if(!ws.length)return head+'<div class="card empty"><p>'+esc(t('Brak danych. Zapisz pierwszy trening, a tutaj pojawią się statystyki i trendy ćwiczeń.'))+'</p></div>';
 
   var cut=S.range==='all'?null:iso(addDays(new Date(),-Number(S.range)));
   var inR=ws.filter(function(w){return !cut||w.date>=cut;});
@@ -530,17 +599,17 @@ function statsHTML(){
   var fromD=parseD(ws[0].date);if(cut&&parseD(cut)>fromD)fromD=parseD(cut);
   var weeks=Math.round(dayDiff(weekStart(fromD),weekStart(new Date()))/7)+1;
   var avg=inR.length/Math.max(1,weeks);
-  var seg='<div class="seg" role="group" aria-label="Zakres">'+[['30','30 dni'],['90','90 dni'],['all','Wszystko']].map(function(r){
+  var seg='<div class="seg" role="group" aria-label="'+esc(t('Zakres'))+'">'+[['30',t('30 dni')],['90',t('90 dni')],['all',t('Wszystko')]].map(function(r){
     return '<button data-act="range" data-v="'+r[0]+'" aria-pressed="'+(S.range===r[0])+'">'+r[1]+'</button>';
   }).join('')+'</div>';
-  var out=head+'<section class="sec" style="margin-top:4px"><div class="row"><h2>Podsumowanie</h2>'+seg+'</div>'+
+  var out=head+'<section class="sec" style="margin-top:4px"><div class="row"><h2>'+esc(t('Podsumowanie'))+'</h2>'+seg+'</div>'+
     '<div class="tiles">'+
-    '<div class="tile"><span class="v">'+inR.length+'</span><span class="l">'+plural(inR.length,'trening','treningi','treningów')+'</span></div>'+
-    '<div class="tile"><span class="v">'+fmt(avg)+'</span><span class="l">średnio na tydzień</span></div>'+
-    '<div class="tile"><span class="v">'+fmt(ton)+'</span><span class="l">kg tonażu w '+sets+' '+plural(sets,'serii','seriach','seriach')+'</span></div>'+
-    '<div class="tile"><span class="v">'+fmt(km)+'</span><span class="l">km cardio</span></div></div></section>';
+    '<div class="tile"><span class="v">'+inR.length+'</span><span class="l">'+esc(plural(inR.length,'trening','treningi','treningów'))+'</span></div>'+
+    '<div class="tile"><span class="v">'+fmt(avg)+'</span><span class="l">'+esc(t('średnio na tydzień'))+'</span></div>'+
+    '<div class="tile"><span class="v">'+fmt(ton)+'</span><span class="l">'+esc(t('kg tonażu w {n} {w}',{n:sets,w:plural(sets,'serii','seriach','seriach')}))+'</span></div>'+
+    '<div class="tile"><span class="v">'+fmt(km)+'</span><span class="l">'+esc(t('km cardio'))+'</span></div></div></section>';
 
-  out+='<section class="sec"><h2>Treningi w tygodniach</h2><div class="card">'+weekBars(ws)+'</div></section>';
+  out+='<section class="sec"><h2>'+esc(t('Treningi w tygodniach'))+'</h2><div class="card">'+weekBars(ws)+'</div></section>';
 
   /* exercises */
   var ids={};S.meta.exercises.forEach(function(e){ids[e.id]=1;});
@@ -549,24 +618,24 @@ function statsHTML(){
     var h=history(id);if(!h.length)return null;
     return {id:id,h:h,t:trendOf(h,metric),last:h[h.length-1]};
   }).filter(Boolean).sort(function(a,b){
-    return a.last.date<b.last.date?1:a.last.date>b.last.date?-1:exName(a.id).localeCompare(exName(b.id),'pl');
+    return a.last.date<b.last.date?1:a.last.date>b.last.date?-1:exName(a.id).localeCompare(exName(b.id),LOC[LANG]);
   });
-  out+='<section class="sec"><h2>Ćwiczenia</h2><div class="stack">';
+  out+='<section class="sec"><h2>'+esc(t('Ćwiczenia'))+'</h2><div class="stack">';
   rows.forEach(function(r){
     var h=r.h,n=h.length,last=h[n-1],prev=n>1?h[n-2]:null,open=!!S.open['x'+r.id];
-    var sub='Ostatnio '+dm(last.date)+': '+fmt(last.ton)+' kg tonażu';
-    if(prev)sub+=' (poprzednio '+fmt(prev.ton)+')';
+    var sub=t('Ostatnio {d}: {v} kg tonażu',{d:dm(last.date),v:fmt(last.ton)});
+    if(prev)sub+=t(' (poprzednio {v})',{v:fmt(prev.ton)});
     var extra='';
     if(prev&&last.maxKg!==prev.maxKg){
       var dk=last.maxKg-prev.maxKg;
-      extra+='<div class="sub '+(dk<0?'t-down':'t-up')+'">Najcięższa seria: '+dispNum(last.maxKg)+' kg ('+(dk>0?'+':'−')+dispNum(Math.abs(Math.round(dk*10)/10))+' kg)</div>';
+      extra+='<div class="sub '+(dk<0?'t-down':'t-up')+'">'+esc(t('Najcięższa seria: {kg} kg ({d} kg)',{kg:dispNum(last.maxKg),d:(dk>0?'+':'−')+dispNum(Math.abs(Math.round(dk*10)/10))}))+'</div>';
     }
-    if(r.t.total!=null)extra+='<div class="sub">Od pierwszego zapisu: '+pct(r.t.total)+' tonażu</div>';
+    if(r.t.total!=null)extra+='<div class="sub">'+esc(t('Od pierwszego zapisu: {p} tonażu',{p:pct(r.t.total)}))+'</div>';
     var best=h.reduce(function(a,b){return b.maxKg>a.maxKg?b:a;},h[0]);
     var e1=h.reduce(function(a,b){return b.e1!=null&&(a==null||b.e1>a)?b.e1:a;},null);
     var detail='';
     if(open){
-      detail='<div class="chips"><span class="chip">Rekord: '+dispNum(best.maxKg)+' kg ('+dm(best.date)+')</span>'+(e1!=null?'<span class="chip">Szac. 1RM: ~'+fmt(e1)+' kg</span>':'')+'<span class="chip">'+n+' '+plural(n,'zapis','zapisy','zapisów')+'</span></div><div style="margin-top:10px">'+
+      detail='<div class="chips"><span class="chip">'+esc(t('Rekord: {kg} kg ({d})',{kg:dispNum(best.maxKg),d:dm(best.date)}))+'</span>'+(e1!=null?'<span class="chip">'+esc(t('Szac. 1RM: ~{v} kg',{v:fmt(e1)}))+'</span>':'')+'<span class="chip">'+n+' '+esc(plural(n,'zapis','zapisy','zapisów'))+'</span></div><div style="margin-top:10px">'+
         h.slice().reverse().map(function(x){
           return '<div class="srow"><span class="dd">'+dm(x.date)+'</span><span>'+esc(setsText(x.sets))+'</span><span class="tt">'+fmt(x.ton)+' kg</span>'+(x.note?'<span class="nn">'+esc(x.note)+'</span>':'')+'</div>';
         }).join('')+'</div>';
@@ -582,99 +651,106 @@ function statsHTML(){
   });});
   var names=Object.keys(cm);
   if(names.length){
-    out+='<section class="sec"><h2>Cardio</h2><div class="stack">';
+    out+='<section class="sec"><h2>'+esc(t('Cardio'))+'</h2><div class="stack">';
     names.forEach(function(m){
-      var h=cm[m],t=trendOf(h,function(c){return c.speed!=null?c.speed:(c.km||0);}),open=!!S.open['c'+m];
+      var h=cm[m],tr=trendOf(h,function(c){return c.speed!=null?c.speed:(c.km||0);}),open=!!S.open['c'+m];
       var last=h[h.length-1];
-      var sub=last.speed?'Ostatnio '+dm(last.date)+': '+fmt(last.speed)+' km/h':'Ostatnio '+dm(last.date);
+      var sub=last.speed?t('Ostatnio {d}: {v} km/h',{d:dm(last.date),v:fmt(last.speed)}):t('Ostatnio {d}',{d:dm(last.date)});
       var detail='';
       if(open){
         detail='<div style="margin-top:12px">'+h.slice().reverse().map(function(x){
           return '<div class="srow"><span class="dd">'+dm(x.date)+'</span><span>'+(x.km!=null?dispNum(x.km)+' km':'')+(x.min!=null?' · '+fmtMin(x.min)+' min':'')+'</span><span class="tt">'+(x.speed?fmt(x.speed)+' km/h':'—')+'</span></div>';
         }).join('')+'</div>';
       }
-      out+='<div class="card"><button class="xc" data-act="toggle" data-k="c'+esc(m)+'" aria-expanded="'+open+'"><span class="l"><h3>'+esc(m)+'</h3>'+badge(t)+'<span class="sub">'+sub+'</span></span>'+spark(h.map(function(c){return c.speed!=null?c.speed:(c.km||0);}),t.kind==='up'?'up':t.kind==='down'?'down':'flat')+'</button>'+detail+'</div>';
+      out+='<div class="card"><button class="xc" data-act="toggle" data-k="c'+esc(m)+'" aria-expanded="'+open+'"><span class="l"><h3>'+esc(m)+'</h3>'+badge(tr)+'<span class="sub">'+sub+'</span></span>'+spark(h.map(function(c){return c.speed!=null?c.speed:(c.km||0);}),tr.kind==='up'?'up':tr.kind==='down'?'down':'flat')+'</button>'+detail+'</div>';
     });
     out+='</div></section>';
   }
-  out+='<p class="foot-note">Tonaż to suma powtórzeń × ciężar ze wszystkich serii. Progres i regres porównują dwa ostatnie treningi danego ćwiczenia (zmiana powyżej 2%). Szac. 1RM liczony wzorem Epleya z serii do 12 powtórzeń.</p>';
+  out+='<p class="foot-note">'+esc(t('Tonaż to suma powtórzeń × ciężar ze wszystkich serii. Progres i regres porównują dwa ostatnie treningi danego ćwiczenia (zmiana powyżej 2%). Szac. 1RM liczony wzorem Epleya z serii do 12 powtórzeń.'))+'</p>';
   return out;
 }
 
 function exercisesHTML(){
-  var head='<header class="top"><h1>Ćwiczenia</h1><p class="muted">Twoja lista do wybierania w treningu</p></header>';
+  var head='<header class="top"><h1>'+esc(t('Ćwiczenia'))+'</h1><p class="muted">'+esc(t('Twoja lista do wybierania w treningu'))+'</p></header>';
+  var tgl=function(k,open){return '<button class="btn sm ghost" data-act="toggle-listdesc" data-k="'+esc(k)+'" aria-expanded="'+open+'" style="white-space:nowrap;padding:0 8px;font-size:14px">'+esc(open?t('Ukryj opis'):t('Pokaż opis'))+'</button>';};
   var rows=S.meta.exercises.map(function(e,i){
-    return '<div class="card stack" style="gap:8px;padding:10px"><div class="exrow"><input class="txt" id="exn-'+i+'" data-chg="exname" data-i="'+i+'" value="'+esc(e.name)+'" maxlength="60" aria-label="Nazwa ćwiczenia"><button class="btn sm ghost" data-act="toggle-listdesc" data-ex="'+esc(e.id)+'" aria-expanded="'+(!!S.descOpenList[e.id])+'" style="white-space:nowrap;padding:0 8px;font-size:14px">'+(S.descOpenList[e.id]?'Ukryj opis':'Pokaż opis')+'</button><button class="btn sm ghost" data-act="del-exlist" data-i="'+i+'" style="padding:0 8px;font-size:14px">Usuń</button></div>'+
-      (S.descOpenList[e.id]?'<textarea class="txt desc1" id="exd-'+i+'" data-chg="exdesc" data-ex="'+esc(e.id)+'" rows="2" maxlength="400" placeholder="Opis ćwiczenia (np. maszyna, chwyt, ustawienie)" aria-label="Opis ćwiczenia '+esc(e.name)+'">'+esc(e.desc||'')+'</textarea>':'')+'</div>';
+    var k='ex:'+e.id,open=!!S.descOpenList[k];
+    return '<div class="card stack" style="gap:8px;padding:10px"><div class="exrow"><input class="txt" id="exn-'+i+'" data-chg="exname" data-i="'+i+'" value="'+esc(e.name)+'" maxlength="60" aria-label="'+esc(t('Nazwa ćwiczenia'))+'">'+tgl(k,open)+'<button class="btn sm ghost" data-act="del-exlist" data-i="'+i+'" style="padding:0 8px;font-size:14px">'+esc(t('Usuń'))+'</button></div>'+
+      (open?descField(k,e.name,'exd-'+i,t('Opis ćwiczenia (np. maszyna, chwyt, ustawienie)')):'')+'</div>';
   }).join('');
   var cr=S.meta.cardio.map(function(m,i){
-    return '<div class="exrow"><input class="txt" id="cmn-'+i+'" data-chg="cname" data-i="'+i+'" value="'+esc(m)+'" maxlength="60" aria-label="Nazwa urządzenia"><button class="btn sm ghost" data-act="del-cardiolist" data-i="'+i+'">Usuń</button></div>';
+    var k='c:'+m,open=!!S.descOpenList[k];
+    return '<div class="card stack" style="gap:8px;padding:10px"><div class="exrow"><input class="txt" id="cmn-'+i+'" data-chg="cname" data-i="'+i+'" value="'+esc(m)+'" maxlength="60" aria-label="'+esc(t('Nazwa urządzenia'))+'">'+tgl(k,open)+'<button class="btn sm ghost" data-act="del-cardiolist" data-i="'+i+'" style="padding:0 8px;font-size:14px">'+esc(t('Usuń'))+'</button></div>'+
+      (open?descField(k,m,'cmd-'+i,t('Opis urządzenia (np. ustawienie, nachylenie, tempo)')):'')+'</div>';
   }).join('');
   return head+
-    '<section class="sec" style="margin-top:4px"><h2>Siłownia</h2><div class="exlist">'+rows+
-    '<div class="exrow"><input class="txt" id="exn-new" placeholder="Nowe ćwiczenie" maxlength="60" aria-label="Nowe ćwiczenie"><button class="btn sm" data-act="add-exlist">Dodaj</button></div></div>'+
-    '<p class="small muted">Usunięcie z listy nie kasuje historii. Dawne treningi zostają w dzienniku i statystykach.</p></section>'+
-    '<section class="sec"><h2>Cardio</h2><div class="exlist">'+cr+
-    '<div class="exrow"><input class="txt" id="cmn-new" placeholder="Nowe urządzenie" maxlength="60" aria-label="Nowe urządzenie"><button class="btn sm" data-act="add-cardiolist">Dodaj</button></div></div></section>';
+    '<section class="sec" style="margin-top:4px"><h2>'+esc(t('Siłownia'))+'</h2><div class="exlist">'+rows+
+    '<div class="exrow"><input class="txt" id="exn-new" placeholder="'+esc(t('Nowe ćwiczenie'))+'" maxlength="60" aria-label="'+esc(t('Nowe ćwiczenie'))+'"><button class="btn sm" data-act="add-exlist">'+esc(t('Dodaj'))+'</button></div></div>'+
+    '<p class="small muted">'+esc(t('Usunięcie z listy nie kasuje historii. Dawne treningi zostają w treningach i statystykach.'))+'</p></section>'+
+    '<section class="sec"><h2>'+esc(t('Cardio'))+'</h2><div class="exlist">'+cr+
+    '<div class="exrow"><input class="txt" id="cmn-new" placeholder="'+esc(t('Nowe urządzenie'))+'" maxlength="60" aria-label="'+esc(t('Nowe urządzenie'))+'"><button class="btn sm" data-act="add-cardiolist">'+esc(t('Dodaj'))+'</button></div></div></section>';
 }
 
 function settingsHTML(){
-  var head='<header class="top"><button class="btn sm" data-act="close-settings" aria-label="Wróć" style="align-self:flex-start">\u2039 Wróć</button><h1>Ustawienia</h1></header>';
+  var head='<header class="top"><button class="btn sm" data-act="close-settings" aria-label="'+esc(t('Wróć'))+'" style="align-self:flex-start">\u2039 '+esc(t('Wróć'))+'</button><h1>'+esc(t('Ustawienia'))+'</h1></header>';
   return head+
-    '<section class="sec" style="margin-top:4px"><h2>Wygląd</h2><div class="seg" role="group" aria-label="Motyw" style="align-self:flex-start">'+
-    [['auto','Systemowy'],['light','Jasny'],['dark','Ciemny']].map(function(o){return '<button data-act="theme" data-v="'+o[0]+'" aria-pressed="'+(getTheme()===o[0])+'">'+o[1]+'</button>';}).join('')+'</div>'+
-    '<p class="small muted">Systemowy dopasowuje się do ustawień telefonu.</p></section>'+
-    '<section class="sec"><h2>Aplikacja</h2><p class="small muted">Wersja: '+(isDev?'lokalna (rozwojowa)':esc(APP_BUILT)+' ('+esc(APP_BUILD)+')')+'</p>'+
-    '<div class="stack"><button class="btn block" data-act="check-update">Sprawdź aktualizacje</button></div><div id="updbox" class="stack" style="margin-top:10px" role="status" aria-live="polite"></div></section>'+
-    '<section class="sec"><h2>Dane</h2><p class="small muted">'+'Treningi zapisują się w pamięci tej aplikacji na telefonie. Zrób kopię zapasową przed czyszczeniem danych przeglądarki lub zmianą telefonu.'+'</p>'+
-    '<div class="stack"><button class="btn block" data-act="export-json">Zapisz kopię zapasową (JSON)</button><button class="btn block" data-act="import-json">Wczytaj kopię zapasową</button><input type="file" id="imp-file" accept=".json,application/json" hidden><button class="btn block" data-act="export">Pobierz wszystko jako CSV</button><div class="exrow"><button class="btn sm block" data-act="copy-backup">Skopiuj kopię jako tekst</button><button class="btn sm block" data-act="paste-backup">Wklej kopię z tekstu</button></div>'+'</div>'+
+    '<section class="sec" style="margin-top:4px"><h2>'+esc(t('Wygląd'))+'</h2><div class="seg" role="group" aria-label="'+esc(t('Motyw'))+'" style="align-self:flex-start">'+
+    [['auto',t('Systemowy')],['light',t('Jasny')],['dark',t('Ciemny')]].map(function(o){return '<button data-act="theme" data-v="'+o[0]+'" aria-pressed="'+(getTheme()===o[0])+'">'+esc(o[1])+'</button>';}).join('')+'</div>'+
+    '<p class="small muted">'+esc(t('Systemowy dopasowuje się do ustawień telefonu.'))+'</p></section>'+
+    '<section class="sec"><h2>'+esc(t('Język'))+'</h2><div class="seg" role="group" aria-label="'+esc(t('Język'))+'" style="align-self:flex-start">'+
+    [['pl','Polski'],['en','English'],['de','Deutsch']].map(function(o){return '<button data-act="lang" data-v="'+o[0]+'" lang="'+o[0]+'" aria-pressed="'+(LANG===o[0])+'">'+o[1]+'</button>';}).join('')+'</div></section>'+
+    '<section class="sec"><h2>'+esc(t('Aplikacja'))+'</h2><p class="small muted">'+esc(t('Wersja: {v}',{v:isDev?t('lokalna (rozwojowa)'):APP_BUILT+' ('+APP_BUILD+')'}))+'</p>'+
+    '<div class="stack"><button class="btn block" data-act="check-update">'+esc(t('Sprawdź aktualizacje'))+'</button></div><div id="updbox" class="stack" style="margin-top:10px" role="status" aria-live="polite"></div></section>'+
+    '<section class="sec"><h2>'+esc(t('Dane'))+'</h2><p class="small muted">'+esc(t('Treningi zapisują się w pamięci tej aplikacji na telefonie. Zrób kopię zapasową przed czyszczeniem danych przeglądarki lub zmianą telefonu.'))+'</p>'+
+    '<div class="stack"><button class="btn block" data-act="export-json">'+esc(t('Zapisz kopię zapasową (JSON)'))+'</button><button class="btn block" data-act="import-json">'+esc(t('Wczytaj kopię zapasową'))+'</button><input type="file" id="imp-file" accept=".json,application/json" hidden><button class="btn block" data-act="export">'+esc(t('Pobierz wszystko jako CSV'))+'</button><div class="exrow"><button class="btn sm block" data-act="copy-backup">'+esc(t('Skopiuj kopię jako tekst'))+'</button><button class="btn sm block" data-act="paste-backup">'+esc(t('Wklej kopię z tekstu'))+'</button></div>'+'</div>'+
     '<p class="small" id="datamsg" role="status"></p><div id="datapanel" class="stack"></div></section>';
 }
 
 function editorHTML(){
   var w=S.editing;
-  var html='<div class="bar"><button class="btn sm" data-act="close" aria-label="Wróć do dziennika">‹ Wróć</button><span class="grow" id="savestate" role="status" aria-live="polite">'+(S.dirty?'Niezapisane zmiany':'')+'</span>'+
-    '<input class="txt" type="date" id="w-date" data-in="date" value="'+esc(w.date)+'" aria-label="Data treningu"></div>';
+  var html='<div class="bar"><button class="btn sm" data-act="close" aria-label="'+esc(t('Wróć do treningów'))+'">‹ '+esc(t('Wróć'))+'</button><span class="grow" id="savestate" role="status" aria-live="polite">'+esc(S.dirty?t('Niezapisane zmiany'):'')+'</span>'+
+    '<button class="btn datebtn" id="w-date" data-act="open-datepick" aria-haspopup="dialog" aria-label="'+esc(t('Zmień datę treningu'))+'">'+esc(fmtFull(w.date))+' \u25BE</button></div>';
   html+='<header class="top" style="padding-bottom:10px"><h1 id="etitle">'+esc(wdName(w.date))+' '+dm(w.date)+'</h1></header>';
-  html+='<textarea class="txt" id="w-note" data-in="wnote" rows="2" placeholder="Notatka do treningu, np. miałem mało czasu" aria-label="Notatka do treningu">'+esc(w.note||'')+'</textarea>';
+  html+='<textarea class="txt" id="w-note" data-in="wnote" rows="2" placeholder="'+esc(t('Notatka do treningu, np. miałem mało czasu'))+'" aria-label="'+esc(t('Notatka do treningu'))+'">'+esc(w.note||'')+'</textarea>';
 
   if(w.cardio.length){
-    html+='<section class="sec"><h2>Cardio</h2><div class="stack">';
+    html+='<section class="sec"><h2>'+esc(t('Cardio'))+'</h2><div class="stack">';
     html+=w.cardio.map(function(c,i){
       var sp=speedOf(c),pv=prevCardio(c.m,w);
-      return '<div class="card"><div class="exhead"><h3>'+esc(c.m||'Cardio')+'</h3><button class="btn sm ghost" data-act="del-cardio" data-c="'+i+'">Usuń</button></div>'+
-        (pv?'<p class="prevline">Poprzednio '+dm(pv.date)+': '+(pv.km!=null?dispNum(pv.km)+' km':'')+(pv.min!=null?' \u00B7 '+fmtMin(pv.min)+' min':'')+'</p>':'')+
+      return '<div class="card"><div class="exhead"><h3>'+esc(c.m||'Cardio')+'</h3><div class="exbtns"><button class="btn sm ghost" data-act="toggle-desc" data-ex="c:'+esc(c.m)+'" aria-expanded="'+(!!S.descOpen['c:'+c.m])+'">'+esc(S.descOpen['c:'+c.m]?t('Ukryj opis'):t('Pokaż opis'))+'</button><button class="btn sm ghost" data-act="del-cardio" data-c="'+i+'">'+esc(t('Usuń'))+'</button></div></div>'+
+        (S.descOpen['c:'+c.m]?'<div class="descbox">'+(descGet('c:'+c.m)?'<div class="descro" tabindex="0" role="note" aria-label="'+esc(t('Opis urządzenia'))+'">'+esc(descGet('c:'+c.m))+'</div>':'<div class="descro empty" tabindex="0" role="note">'+esc(t('Brak opisu. Dodasz go w zakładce Ćwiczenia.'))+'</div>')+'</div>':'')+
+        (pv?'<p class="prevline">'+esc(t('Poprzednio {d}: {v}',{d:dm(pv.date),v:(pv.km!=null?dispNum(pv.km)+' km':'')+(pv.min!=null?' \u00B7 '+fmtMin(pv.min)+' min':'')}))+'</p>':'')+
         '<div class="cgrid"><label>km<input class="num wide" id="c-km-'+i+'" data-sel inputmode="decimal" data-in="ckm" data-c="'+i+'" value="'+esc(dispNum(c.km))+'" placeholder="'+esc(pv&&pv.km!=null?dispNum(pv.km):'')+'" autocomplete="off"></label>'+
-        '<label>czas (min)<input class="num wide" id="c-min-'+i+'" data-sel data-in="cmin" data-c="'+i+'" value="'+esc(fmtMin(c.min))+'" placeholder="'+esc(pv&&pv.min!=null?fmtMin(pv.min):'')+'" autocomplete="off"></label>'+
+        '<label>'+esc(t('czas (min)'))+'<input class="num wide" id="c-min-'+i+'" data-sel data-in="cmin" data-c="'+i+'" value="'+esc(fmtMin(c.min))+'" placeholder="'+esc(pv&&pv.min!=null?fmtMin(pv.min):'')+'" autocomplete="off"></label>'+
         '<label>km/h<span class="sp" id="c-sp-'+i+'">'+(sp?fmt(sp):'\u2014')+'</span></label></div></div>';
     }).join('');
     html+='</div></section>';
   }
 
-  html+='<section class="sec"><h2>Ćwiczenia</h2><div class="stack">';
+  html+='<section class="sec"><h2>'+esc(t('Ćwiczenia'))+'</h2><div class="stack">';
   if(!w.entries.length){
-    html+='<div class="card empty"><p>Wybierz ćwiczenia z listy. Możesz zaznaczyć kilka naraz i uzupełniać je naprzemiennie.</p><button class="btn primary block" data-act="open-sheet">Wybierz ćwiczenia</button></div>';
+    html+='<div class="card empty"><p>'+esc(t('Wybierz ćwiczenia z listy. Możesz zaznaczyć kilka naraz i uzupełniać je naprzemiennie.'))+'</p><button class="btn primary block" data-act="open-sheet">'+esc(t('Wybierz ćwiczenia'))+'</button></div>';
   }
   w.entries.forEach(function(en,ei){
     var prev=prevFor(en.ex,w);
     var mex=S.meta.exercises.filter(function(x){return x.id===en.ex;})[0],desc=mex&&mex.desc?mex.desc:'',dopen=!!S.descOpen[en.ex];
-    html+='<div class="card"><div class="exhead"><h3>'+esc(exName(en.ex,en.name))+'</h3><div class="exbtns"><button class="btn sm ghost" data-act="toggle-desc" data-ex="'+esc(en.ex)+'" aria-expanded="'+dopen+'">'+(dopen?'Ukryj opis':'Pokaż opis')+'</button><button class="btn sm ghost" data-act="del-ex" data-e="'+ei+'">Usuń</button></div></div>';
-    if(dopen)html+='<div class="descbox"><div class="descro'+(desc?'':' empty')+'" tabindex="0" role="note" aria-label="Opis ćwiczenia">'+(desc?esc(desc):'Brak opisu. Dodasz go w zakładce Ćwiczenia.')+'</div></div>';
+    html+='<div class="card"><div class="exhead"><h3>'+esc(exName(en.ex,en.name))+'</h3><div class="exbtns"><button class="btn sm ghost" data-act="toggle-desc" data-ex="'+esc(en.ex)+'" aria-expanded="'+dopen+'">'+esc(dopen?t('Ukryj opis'):t('Pokaż opis'))+'</button><button class="btn sm ghost" data-act="del-ex" data-e="'+ei+'">'+esc(t('Usuń'))+'</button></div></div>';
+    if(dopen)html+='<div class="descbox"><div class="descro'+(desc?'':' empty')+'" tabindex="0" role="note" aria-label="'+esc(t('Opis ćwiczenia'))+'">'+(desc?esc(desc):esc(t('Brak opisu. Dodasz go w zakładce Ćwiczenia.')))+'</div></div>';
 
-    if(prev)html+='<p class="prevline">Poprzednio '+dm(prev.date)+': '+esc(setsText(prev.sets))+'</p>';
-    html+='<div class="labels"><span></span><span>powt.</span><span></span><span>kg</span><span></span></div>';
+    if(prev)html+='<p class="prevline">'+esc(t('Poprzednio {d}: {v}',{d:dm(prev.date),v:setsText(prev.sets)}))+'</p>';
+    html+='<div class="labels"><span></span><span>'+esc(t('powt.'))+'</span><span></span><span>kg</span><span></span></div>';
     en.sets.forEach(function(s,si){
       html+='<div class="setrow"><span class="idx">'+(si+1)+'</span>'+
-        '<input class="num" id="r-'+ei+'-'+si+'" data-sel inputmode="numeric" data-in="r" data-e="'+ei+'" data-s="'+si+'" value="'+esc(dispNum(s.r))+'" placeholder="'+esc(ph(en,prev,si,'r'))+'" aria-label="Powtórzenia, seria '+(si+1)+'" autocomplete="off">'+
+        '<input class="num" id="r-'+ei+'-'+si+'" data-sel inputmode="numeric" data-in="r" data-e="'+ei+'" data-s="'+si+'" value="'+esc(dispNum(s.r))+'" placeholder="'+esc(ph(en,prev,si,'r'))+'" aria-label="'+esc(t('Powtórzenia, seria {n}',{n:si+1}))+'" autocomplete="off">'+
         '<span class="x" aria-hidden="true">×</span>'+
-        '<input class="num" id="k-'+ei+'-'+si+'" data-sel inputmode="decimal" data-in="kg" data-e="'+ei+'" data-s="'+si+'" value="'+esc(dispNum(s.kg))+'" placeholder="'+esc(ph(en,prev,si,'kg'))+'" aria-label="Ciężar w kg, seria '+(si+1)+'" autocomplete="off">'+
-        '<button class="icon-btn" data-act="del-set" data-e="'+ei+'" data-s="'+si+'" aria-label="Usuń serię '+(si+1)+'">×</button></div>';
+        '<input class="num" id="k-'+ei+'-'+si+'" data-sel inputmode="decimal" data-in="kg" data-e="'+ei+'" data-s="'+si+'" value="'+esc(dispNum(s.kg))+'" placeholder="'+esc(ph(en,prev,si,'kg'))+'" aria-label="'+esc(t('Ciężar w kg, seria {n}',{n:si+1}))+'" autocomplete="off">'+
+        '<button class="icon-btn" data-act="del-set" data-e="'+ei+'" data-s="'+si+'" aria-label="'+esc(t('Usuń serię {n}',{n:si+1}))+'">×</button></div>';
     });
-    html+='<div class="exactions"><button class="btn sm" data-act="add-set" data-e="'+ei+'">+ Seria</button>'+(prev?'<button class="btn sm ghost" data-act="copy-prev" data-e="'+ei+'">Wstaw z poprzedniego</button>':'')+'</div>';
-    html+='<input class="txt" id="en-'+ei+'" data-in="enote" data-e="'+ei+'" value="'+esc(en.note||'')+'" placeholder="Notatka do ćwiczenia, np. bolał bark" aria-label="Notatka do ćwiczenia" autocomplete="off"></div>';
+    html+='<div class="exactions"><button class="btn sm" data-act="add-set" data-e="'+ei+'">'+esc(t('+ Seria'))+'</button>'+(prev?'<button class="btn sm ghost" data-act="copy-prev" data-e="'+ei+'">'+esc(t('Wstaw z poprzedniego'))+'</button>':'')+'</div>';
+    html+='<input class="txt" id="en-'+ei+'" data-in="enote" data-e="'+ei+'" value="'+esc(en.note||'')+'" placeholder="'+esc(t('Notatka do ćwiczenia, np. bolał bark'))+'" aria-label="'+esc(t('Notatka do ćwiczenia'))+'" autocomplete="off"></div>';
   });
   html+='</div></section>';
-  html+='<div style="margin-top:26px">'+(S.workouts[w.id]?'<button class="btn block ghost" data-act="del-w">Usuń cały trening</button>':'')+'</div>';
+  html+='<div style="margin-top:26px">'+(S.workouts[w.id]?'<button class="btn block ghost" data-act="del-w">'+esc(t('Usuń cały trening'))+'</button>':'')+'</div>';
   return html;
 }
 function ph(en,prev,si,key){
@@ -684,7 +760,30 @@ function ph(en,prev,si,key){
   return '';
 }
 
+function fmtFull(d){var p=d.split('-');return p[2]+'.'+p[1]+'.'+p[0];}
+function datepickHTML(){
+  var sh=S.sheet,y=sh.y,m=sh.m,cur=S.editing.date,today=todayISO();
+  var byDate={};
+  allWorkouts().forEach(function(x){if(x.id!==S.editing.id)byDate[x.date]=1;});
+  var first=new Date(y,m,1),lead=(first.getDay()+6)%7,days=new Date(y,m+1,0).getDate();
+  var label=first.toLocaleDateString(LOC[LANG],{month:'long',year:'numeric'});
+  var h='<div class="scrim" data-act="close-sheet"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="'+esc(t('Wybierz datę treningu'))+'"><div class="in">'+
+    '<div class="head"><h2>'+esc(t('Data treningu'))+'</h2><button class="btn sm ghost" data-act="close-sheet">'+esc(t('Zamknij'))+'</button></div>'+
+    '<div class="calhead"><button class="btn" data-act="dp-prev" aria-label="'+esc(t('Poprzedni miesiąc'))+'">\u2039</button><div class="mon" style="font-size:22px" aria-live="polite">'+esc(label)+'</div><button class="btn" data-act="dp-next" aria-label="'+esc(t('Następny miesiąc'))+'">\u203A</button></div>'+
+    '<div class="calgrid dp" style="margin-top:10px" role="group" aria-label="'+esc(t('Dni miesiąca'))+'">';
+  ['Pn','Wt','Śr','Cz','Pt','So','Nd'].forEach(function(n){h+='<div class="calwd">'+esc(t(n))+'</div>';});
+  for(var i=0;i<lead;i++)h+='<span class="calday pad"></span>';
+  for(var d=1;d<=days;d++){
+    var ds=y+'-'+pad(m+1)+'-'+pad(d);
+    h+='<button class="calday'+(byDate[ds]?' tr':'')+(ds===today?' today':'')+(ds===cur?' sel':'')+'" data-act="dp-pick" data-d="'+ds+'" aria-pressed="'+(ds===cur)+'" aria-label="'+d+' '+esc(label)+(byDate[ds]?esc(t(', jest już trening')):'')+'">'+d+'</button>';
+  }
+  for(var tq=lead+days;tq<42;tq++)h+='<span class="calday pad"></span>';
+  h+='</div><div class="foot"><p class="small muted" style="margin:0">'+esc(t('Zielone dni mają już zapisany trening.'))+'</p><button class="btn block" data-act="dp-today">'+esc(t('Dzisiaj'))+'</button></div></div></div>';
+  return h;
+}
+
 function sheetHTML(){
+  if(S.sheet.kind==='date')return datepickHTML();
   var w=S.editing,used={},usage={},cardio=S.sheet.kind==='cardio';
   var list;
   if(cardio){
@@ -696,30 +795,31 @@ function sheetHTML(){
     allWorkouts().forEach(function(x){(x.entries||[]).forEach(function(e){usage[e.ex]=(usage[e.ex]||0)+1;});});
     list=S.meta.exercises.slice();
   }
-  list.sort(function(a,b){return (usage[b.id]||0)-(usage[a.id]||0)||a.name.localeCompare(b.name,'pl');});
+  list.sort(function(a,b){return (usage[b.id]||0)-(usage[a.id]||0)||a.name.localeCompare(b.name,LOC[LANG]);});
   var sel=S.sheet.sel||[];
   var rows=list.map(function(e){
     var u=!!used[e.id];
-    return '<label class="pick"><input type="checkbox" name="pick" value="'+esc(e.id)+'"'+(u?' checked disabled':'')+(sel.indexOf(e.id)>-1?' checked':'')+'><span>'+esc(e.name)+'</span>'+(u?'<small class="muted">w treningu</small>':'')+'</label>';
+    return '<label class="pick"><input type="checkbox" name="pick" value="'+esc(e.id)+'"'+(u?' checked disabled':'')+(sel.indexOf(e.id)>-1?' checked':'')+'><span>'+esc(e.name)+'</span>'+(u?'<small class="muted">'+esc(t('w treningu'))+'</small>':'')+'</label>';
   }).join('');
-  var title=cardio?'Dodaj cardio':'Dodaj ćwiczenia',ph=cardio?'Nowe urządzenie':'Nowe ćwiczenie';
-  return '<div class="scrim" data-act="close-sheet"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="'+title+'"><div class="in">'+
-    '<div class="head"><h2>'+title+'</h2><button class="btn sm ghost" data-act="close-sheet">Zamknij</button></div>'+
+  var title=cardio?t('Dodaj cardio'):t('Dodaj ćwiczenia'),ph=cardio?t('Nowe urządzenie'):t('Nowe ćwiczenie');
+  return '<div class="scrim" data-act="close-sheet"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="'+esc(title)+'"><div class="in">'+
+    '<div class="head"><h2>'+esc(title)+'</h2><button class="btn sm ghost" data-act="close-sheet">'+esc(t('Zamknij'))+'</button></div>'+
     '<div class="list">'+rows+'</div>'+
-    '<div class="foot"><div class="newrow"><input class="txt" id="new-ex" placeholder="'+ph+'" maxlength="60" aria-label="'+ph+'" autocomplete="off"><button class="btn" data-act="new-ex">Utwórz</button></div>'+
-    '<button class="btn primary block" id="add-picked" data-act="add-picked" disabled>Dodaj do treningu</button></div></div></div>';
+    '<div class="foot"><div class="newrow"><input class="txt" id="new-ex" placeholder="'+esc(ph)+'" maxlength="60" aria-label="'+esc(ph)+'" autocomplete="off"><button class="btn" data-act="new-ex">'+esc(t('Utwórz'))+'</button></div>'+
+    '<button class="btn primary block" id="add-picked" data-act="add-picked" disabled>'+esc(t('Dodaj do treningu'))+'</button></div></div></div>';
 }
 
 /* ---------- render ---------- */
 function render(opts){
   opts=opts||{};
   var y=window.scrollY;
-  if(!S.ready){view.innerHTML='<header class="top"><h1>Dziennik</h1><p class="muted">Wczytywanie…</p></header>';navEl.innerHTML='';return;}
+  if(!S.ready){view.innerHTML='<header class="top"><h1>'+esc(t('Treningi'))+'</h1><p class="muted">'+esc(t('Wczytywanie…'))+'</p></header>';navEl.innerHTML='';return;}
   view.innerHTML=S.editing?editorHTML():S.settings?settingsHTML():S.tab==='cal'?calendarHTML():S.tab==='stats'?statsHTML():S.tab==='ex'?exercisesHTML():logHTML();
-  if(!S.editing&&!S.settings)view.innerHTML=view.innerHTML.replace('<header class="top">','<header class="top"><button class="gear" data-act="open-settings" aria-label="Ustawienia">'+GEAR+'</button>');
+  if(!S.editing&&!S.settings)view.innerHTML=view.innerHTML.replace('<header class="top">','<header class="top"><button class="gear" data-act="open-settings" aria-label="'+esc(t('Ustawienia'))+'">'+GEAR+'</button>');
   navEl.innerHTML=navHTML();
-  sheetRoot.innerHTML=S.sheet&&S.editing?sheetHTML():'';
-  if(S.sheet)updatePicked();
+  navEl.setAttribute('aria-label',t('Nawigacja'));
+  sheetRoot.innerHTML=S.sheet&&S.editing?sheetHTML():(!S.editing&&!S.settings&&S.tab==='cal'&&S.cal.sel?calPopupHTML():'');
+  if(S.sheet&&S.sheet.kind!=='date')updatePicked();
   if(opts.focus){var el=document.getElementById(opts.focus);if(el){el.focus({preventScroll:false});if(el.select)el.select();}}
   else if(opts.keep)window.scrollTo(0,y);
   else window.scrollTo(0,0);
@@ -731,7 +831,7 @@ function softRender(){
 function updatePicked(){
   var n=sheetRoot.querySelectorAll('input[name=pick]:checked:not(:disabled)').length;
   var b=$('#add-picked');if(!b)return;
-  b.disabled=n===0;b.textContent=n?'Dodaj do treningu ('+n+')':'Dodaj do treningu';
+  b.disabled=n===0;b.textContent=n?t('Dodaj do treningu ({n})',{n:n}):t('Dodaj do treningu');
 }
 function setSave(t){var e=$('#savestate');if(e)e.textContent=t;}
 
@@ -754,7 +854,7 @@ function cleanWorkout(w){
 }
 var hasContent=function(o){return !!(o.note||o.cardio.length||o.entries.length);};
 var saveTimer=null;
-function touch(){S.dirty=true;clearTimeout(saveTimer);saveTimer=setTimeout(flush,700);setSave('Zapisywanie…');}
+function touch(){S.dirty=true;clearTimeout(saveTimer);saveTimer=setTimeout(flush,700);setSave(t('Zapisywanie…'));}
 async function flush(){
   clearTimeout(saveTimer);
   var w=S.editing;if(!w||!S.dirty)return;
@@ -768,10 +868,10 @@ async function flush(){
   try{
     await Store.saveWorkout(o);
     if(metaChanged)await Store.saveMeta();
-    setSave('Zapisano ✓');
+    setSave(t('Zapisano ✓'));
   }catch(err){
     S.dirty=true;
-    setSave(err&&err.code==='quota_exceeded'?'Limit danych jest pełny. Usuń stare treningi.':'Nie zapisano. Zmień coś, aby spróbować ponownie.');
+    setSave(err&&err.code==='quota_exceeded'?t('Limit danych jest pełny. Usuń stare treningi.'):t('Nie zapisano. Zmień coś, aby spróbować ponownie.'));
   }
 }
 async function closeEditor(){
@@ -797,43 +897,44 @@ function addEntries(ids){
 }
 function confirmTap(el,fn){
   if(el.dataset.armed){fn();return;}
-  var orig=el.textContent;el.dataset.armed='1';el.textContent='Potwierdź';el.classList.add('danger');
+  var orig=el.textContent;el.dataset.armed='1';el.textContent=t('Potwierdź');el.classList.add('danger');
   setTimeout(function(){if(el.isConnected&&el.dataset.armed){delete el.dataset.armed;el.textContent=orig;el.classList.remove('danger');}},3500);
 }
 
 /* ---------- actions ---------- */
 function csvEscape(v){v=v==null?'':String(v);return /[";\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
 async function exportCsv(){
-  var rows=[['data','typ','nazwa','seria','powtórzenia','kg','km','minuty','notatka']];
+  var G=t('siłownia'),CA=t('cardio');
+  var rows=[[t('data'),t('typ'),t('nazwa'),t('seria'),t('powtórzenia'),'kg','km',t('minuty'),t('notatka')]];
   allWorkouts().forEach(function(w){
     (w.entries||[]).forEach(function(en){
       var nm=exName(en.ex,en.name);
-      if(!(en.sets||[]).length)rows.push([w.date,'siłownia',nm,'','','','','',[w.note,en.note].filter(Boolean).join(' | ')]);
-      (en.sets||[]).forEach(function(s,i){rows.push([w.date,'siłownia',nm,i+1,s.r==null?'':s.r,dispNum(s.kg),'','',i===0?[w.note,en.note].filter(Boolean).join(' | '):'']);});
+      if(!(en.sets||[]).length)rows.push([w.date,G,nm,'','','','','',[w.note,en.note].filter(Boolean).join(' | ')]);
+      (en.sets||[]).forEach(function(s,i){rows.push([w.date,G,nm,i+1,s.r==null?'':s.r,dispNum(s.kg),'','',i===0?[w.note,en.note].filter(Boolean).join(' | '):'']);});
     });
-    (w.cardio||[]).forEach(function(c){rows.push([w.date,'cardio',c.m,'','','',dispNum(c.km),fmtMin(c.min),w.note||'']);});
+    (w.cardio||[]).forEach(function(c){rows.push([w.date,CA,c.m,'','','',dispNum(c.km),fmtMin(c.min),w.note||'']);});
   });
   var csv='﻿'+rows.map(function(r){return r.map(csvEscape).join(';');}).join('\r\n');
   deliver('dziennik-treningowy.csv',csv,'text/csv;charset=utf-8');
 }
 async function checkUpdate(){
   var box=$('#updbox');if(!box)return;
-  box.innerHTML='<p class="small muted">Sprawdzam\u2026</p>';
+  box.innerHTML='<p class="small muted">'+esc(t('Sprawdzam…'))+'</p>';
   var info=null;
   try{
     var r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});
     if(r.ok)info=await r.json();
   }catch(e){}
   box=$('#updbox');if(!box)return;
-  if(!info||!info.v){box.innerHTML='<p class="small">Nie udało się sprawdzić. Połącz się z internetem i spróbuj ponownie.</p>';return;}
+  if(!info||!info.v){box.innerHTML='<p class="small">'+esc(t('Nie udało się sprawdzić. Połącz się z internetem i spróbuj ponownie.'))+'</p>';return;}
   if(isDev||info.v!==APP_BUILD){
-    box.innerHTML='<p class="small">Dostępna nowa wersja: '+esc(info.built||info.v)+'.</p><button class="btn primary block" data-act="apply-update">Zaktualizuj teraz</button><p class="small muted">Twoje treningi zostają bez zmian.</p>';
+    box.innerHTML='<p class="small">'+esc(t('Dostępna nowa wersja: {v}.',{v:info.built||info.v}))+'</p><button class="btn primary block" data-act="apply-update">'+esc(t('Zaktualizuj teraz'))+'</button><p class="small muted">'+esc(t('Twoje treningi zostają bez zmian.'))+'</p>';
   }else{
-    box.innerHTML='<p class="small">Masz najnowszą wersję ('+esc(APP_BUILT)+').</p>';
+    box.innerHTML='<p class="small">'+esc(t('Masz najnowszą wersję ({v}).',{v:APP_BUILT}))+'</p>';
   }
 }
 async function applyUpdate(){
-  var box=$('#updbox');if(box)box.innerHTML='<p class="small muted">Aktualizuję\u2026</p>';
+  var box=$('#updbox');if(box)box.innerHTML='<p class="small muted">'+esc(t('Aktualizuję…'))+'</p>';
   try{
     if(window.caches){var ks=await caches.keys();await Promise.all(ks.map(function(k){return caches.delete(k);}));}
     if(navigator.serviceWorker){var rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(function(r){return r.unregister();}));}
@@ -853,19 +954,19 @@ function exportJson(){deliver('dziennik-kopia-'+todayISO()+'.json',backupText(),
 function dataPanel(html){var b=$('#datapanel');if(b)b.innerHTML=html;}
 function dataMsg(t){var m=$('#datamsg');if(m)m.textContent=t;}
 function showCopyPanel(text,intro){
-  dataPanel('<p class="small">'+esc(intro)+'</p><textarea class="txt" id="copytxt" rows="6" readonly>'+esc(text)+'</textarea><button class="btn block" data-act="copy-text">Skopiuj do schowka</button>');
-  var t=$('#copytxt');if(t){t.focus();t.select();}
+  dataPanel('<p class="small">'+esc(intro)+'</p><textarea class="txt" id="copytxt" rows="6" readonly>'+esc(text)+'</textarea><button class="btn block" data-act="copy-text">'+esc(t('Skopiuj do schowka'))+'</button>');
+  var ta=$('#copytxt');if(ta){ta.focus();ta.select();}
 }
 function showPastePanel(){
-  dataPanel('<p class="small">Wklej tutaj zawartość kopii zapasowej (tekst zaczynający się od {"app":"dziennik-treningowy"…).</p><textarea class="txt" id="pastetxt" rows="6" placeholder="Wklej kopię zapasową"></textarea><button class="btn primary block" data-act="paste-import">Wczytaj wklejone dane</button>');
-  var t=$('#pastetxt');if(t)t.focus();
+  dataPanel('<p class="small">'+esc(t('Wklej tutaj zawartość kopii zapasowej (tekst zaczynający się od {"app":"dziennik-treningowy"…).'))+'</p><textarea class="txt" id="pastetxt" rows="6" placeholder="'+esc(t('Wklej kopię zapasową'))+'"></textarea><button class="btn primary block" data-act="paste-import">'+esc(t('Wczytaj wklejone dane'))+'</button>');
+  var ta=$('#pastetxt');if(ta)ta.focus();
 }
 async function copyText(){
-  var t=$('#copytxt');if(!t)return;
+  var ta=$('#copytxt');if(!ta)return;
   var ok=false;
-  try{await navigator.clipboard.writeText(t.value);ok=true;}catch(e){}
-  if(!ok){try{t.focus();t.select();ok=document.execCommand('copy');}catch(e){}}
-  dataMsg(ok?'Skopiowano. Wklej do notatki lub e-maila.':'Nie udało się skopiować automatycznie. Zaznacz tekst i skopiuj ręcznie.');
+  try{await navigator.clipboard.writeText(ta.value);ok=true;}catch(e){}
+  if(!ok){try{ta.focus();ta.select();ok=document.execCommand('copy');}catch(e){}}
+  dataMsg(ok?t('Skopiowano. Wklej do notatki lub e-maila.'):t('Nie udało się skopiować automatycznie. Zaznacz tekst i skopiuj ręcznie.'));
 }
 /* Zapis pliku: natywne udostępnianie w APK, w przeglądarce zwykłe pobieranie. W razie braku obu: kopiowanie tekstu. */
 async function deliver(name,text,type){
@@ -876,19 +977,19 @@ async function deliver(name,text,type){
     if(P.Filesystem&&P.Share){
       try{
         var w=await P.Filesystem.writeFile({path:name,data:text,directory:'CACHE',encoding:'utf8'});
-        await P.Share.share({title:name,url:w.uri,dialogTitle:'Zapisz lub wyślij plik'});
-        dataMsg('Wybierz, gdzie zapisać plik (np. Dysk Google, Pliki albo e-mail).');
+        await P.Share.share({title:name,url:w.uri,dialogTitle:t('Zapisz lub wyślij plik')});
+        dataMsg(t('Wybierz, gdzie zapisać plik (np. Dysk Google, Pliki albo e-mail).'));
         return;
       }catch(e){
-        if(e&&/cancel/i.test(String(e.message||e))){dataMsg('Anulowano.');return;}
+        if(e&&/cancel/i.test(String(e.message||e))){dataMsg(t('Anulowano.'));return;}
       }
     }
     dataMsg('');
-    showCopyPanel(text,'Zapis pliku nie jest tu dostępny. Skopiuj zawartość i wklej do notatki lub e-maila, a potem zapisz ją jako plik.');
+    showCopyPanel(text,t('Zapis pliku nie jest tu dostępny. Skopiuj zawartość i wklej do notatki lub e-maila, a potem zapisz ją jako plik.'));
     return;
   }
-  try{saveFile(name,text,type);dataMsg('Plik zapisany w pobranych. Jeśli go nie widzisz, użyj „Skopiuj kopię jako tekst”.');}
-  catch(e){dataMsg('');showCopyPanel(text,'Nie udało się zapisać pliku. Skopiuj zawartość ręcznie.');}
+  try{saveFile(name,text,type);dataMsg(t('Plik zapisany w pobranych. Jeśli go nie widzisz, użyj „Skopiuj kopię jako tekst”.'));}
+  catch(e){dataMsg('');showCopyPanel(text,t('Nie udało się zapisać pliku. Skopiuj zawartość ręcznie.'));}
 }
 async function importJsonText(text){
   try{
@@ -900,14 +1001,16 @@ async function importJsonText(text){
       var m=normMeta(o.meta);
       m.exercises.forEach(function(e){var ex=S.meta.exercises.filter(function(x){return x.id===e.id;})[0];if(!ex)S.meta.exercises.push(e);else if(!ex.desc&&e.desc)ex.desc=e.desc;});
       m.cardio.forEach(function(c){if(S.meta.cardio.indexOf(c)<0)S.meta.cardio.push(c);});
+      S.meta.cardioDesc=S.meta.cardioDesc||{};
+      Object.keys(m.cardioDesc||{}).forEach(function(k){if(!S.meta.cardioDesc[k])S.meta.cardioDesc[k]=m.cardioDesc[k];});
     }
     Store.persistLocal();
     render({keep:true});
-    dataMsg('Wczytano '+n+' '+plural(n,'trening','treningi','treningów')+' z kopii.');
-  }catch(e){dataMsg('To nie jest poprawna kopia z tej aplikacji.');}
+    dataMsg(t('Wczytano {n} {w} z kopii.',{n:n,w:plural(n,'trening','treningi','treningów')}));
+  }catch(e){dataMsg(t('To nie jest poprawna kopia z tej aplikacji.'));}
 }
 async function importJson(file){
-  try{await importJsonText(await file.text());}catch(e){dataMsg('Nie udało się odczytać pliku. Użyj „Wklej kopię z tekstu”.');}
+  try{await importJsonText(await file.text());}catch(e){dataMsg(t('Nie udało się odczytać pliku. Użyj „Wklej kopię z tekstu”.'));}
 }
 document.addEventListener('click',function(ev){
   var el=ev.target.closest('[data-act]');if(!el)return;
@@ -916,7 +1019,12 @@ document.addEventListener('click',function(ev){
   switch(act){
     case 'tab':S.tab=el.dataset.v;S.settings=false;render();break;
     case 'theme':setTheme(el.dataset.v);render({keep:true});break;
-    case 'toggle-listdesc':S.descOpenList[el.dataset.ex]=!S.descOpenList[el.dataset.ex];render({keep:true});break;
+    case 'lang':setLang(el.dataset.v);render({keep:true});break;
+    case 'toggle-listdesc':S.descOpenList[el.dataset.k]=!S.descOpenList[el.dataset.k];render({keep:true});break;
+    case 'confirm-desc':{
+      var dk2=el.dataset.k,dv=(S.descDraft[dk2]!==undefined?S.descDraft[dk2]:descGet(dk2)).trim();
+      descSet(dk2,dv);delete S.descDraft[dk2];S.descSaved[dk2]=true;render({keep:true});break;
+    }
     case 'toggle-desc':S.descOpen[el.dataset.ex]=!S.descOpen[el.dataset.ex];render({keep:true});break;
     case 'open-settings':S.settings=true;render();break;
     case 'close-settings':S.settings=false;render();break;
@@ -924,7 +1032,8 @@ document.addEventListener('click',function(ev){
       var dm_=act==='cal-prev'?-1:1,nd=new Date(S.cal.y,S.cal.m+dm_,1);
       S.cal={y:nd.getFullYear(),m:nd.getMonth(),sel:null};render({keep:true});break;
     }
-    case 'cal-today':{var tn=new Date();S.cal={y:tn.getFullYear(),m:tn.getMonth(),sel:todayISO()};render({keep:true});break;}
+    case 'cal-close':S.cal.sel=null;render({keep:true});break;
+    case 'cal-today':{var tn=new Date();S.cal={y:tn.getFullYear(),m:tn.getMonth(),sel:null};render({keep:true});break;}
     case 'cal-day':S.cal.sel=el.dataset.d;render({keep:true});break;
     case 'cal-new':S.editing=newDraft();S.editing.date=el.dataset.d;S.editing.id='w-'+el.dataset.d+'-'+rid();S.dirty=false;render();break;
     case 'new':S.editing=newDraft();S.dirty=false;render();break;
@@ -934,7 +1043,7 @@ document.addEventListener('click',function(ev){
     case 'export-json':exportJson();break;
     case 'check-update':checkUpdate();break;
     case 'apply-update':applyUpdate();break;
-    case 'copy-backup':showCopyPanel(backupText(),'Skopiuj ten tekst i zapisz go w notatce lub wyślij sobie e-mailem. Wczytasz go przyciskiem „Wklej kopię z tekstu”.');break;
+    case 'copy-backup':showCopyPanel(backupText(),t('Skopiuj ten tekst i zapisz go w notatce lub wyślij sobie e-mailem. Wczytasz go przyciskiem „Wklej kopię z tekstu”.'));break;
     case 'paste-backup':showPastePanel();break;
     case 'copy-text':copyText();break;
     case 'paste-import':{var pt=$('#pastetxt');if(pt)importJsonText(pt.value);break;}
@@ -943,6 +1052,12 @@ document.addEventListener('click',function(ev){
     case 'toggle':S.open[el.dataset.k]=!S.open[el.dataset.k];render({keep:true});break;
     case 'open-sheet':S.sheet={kind:'ex',sel:[]};render({keep:true});break;
     case 'open-sheet-cardio':S.sheet={kind:'cardio',sel:[]};render({keep:true});break;
+    case 'open-datepick':{var dd=parseD(S.editing.date);S.sheet={kind:'date',y:dd.getFullYear(),m:dd.getMonth()};render({keep:true});break;}
+    case 'dp-prev':case 'dp-next':{var nd2=new Date(S.sheet.y,S.sheet.m+(act==='dp-prev'?-1:1),1);S.sheet.y=nd2.getFullYear();S.sheet.m=nd2.getMonth();render({keep:true});break;}
+    case 'dp-today':case 'dp-pick':{
+      var nv=act==='dp-today'?todayISO():el.dataset.d;
+      S.editing.date=nv;S.sheet=null;touch();render({keep:true});break;
+    }
     case 'close-sheet':S.sheet=null;render({keep:true});break;
     case 'add-picked':{
       var ids=Array.prototype.map.call(sheetRoot.querySelectorAll('input[name=pick]:checked:not(:disabled)'),function(x){return x.value;});
@@ -1002,12 +1117,14 @@ document.addEventListener('click',function(ev){
       if(S.meta.cardio.indexOf(nm3)<0){S.meta.cardio.push(nm3);Store.saveMeta().catch(function(){});}
       render({keep:true});break;
     }
-    case 'del-cardiolist':confirmTap(el,function(){S.meta.cardio.splice(i,1);Store.saveMeta().catch(function(){});render({keep:true});});break;
+    case 'del-cardiolist':confirmTap(el,function(){if(S.meta.cardioDesc)delete S.meta.cardioDesc[S.meta.cardio[i]];S.meta.cardio.splice(i,1);Store.saveMeta().catch(function(){});render({keep:true});});break;
   }
 });
 
 document.addEventListener('input',function(ev){
-  var t=ev.target,k=t.dataset&&t.dataset.in,w=S.editing;if(!k||!w)return;
+  var t=ev.target;
+  if(t.dataset&&t.dataset.draft){var dk=t.dataset.draft;S.descDraft[dk]=t.value;delete S.descSaved[dk];refreshDesc(dk,t);return;}
+  var k=t.dataset&&t.dataset.in,w=S.editing;if(!k||!w)return;
   var e=Number(t.dataset.e),s=Number(t.dataset.s),c=Number(t.dataset.c);
   switch(k){
     case 'r':w.entries[e].sets[s].r=num(t.value);break;
@@ -1030,16 +1147,17 @@ document.addEventListener('change',function(ev){
   if(t.name==='pick'){updatePicked();return;}
   var k=t.dataset&&t.dataset.chg;if(!k)return;
   var i=Number(t.dataset.i),v=t.value.trim();
-  if(k==='exdesc'){
-    var xe=S.meta.exercises.filter(function(x){return x.id===t.dataset.ex;})[0];
-    if(xe&&(xe.desc||'')!==v){if(v)xe.desc=v;else delete xe.desc;Store.saveMeta().catch(function(){});}
-    return;
-  }
   if(k==='exname'){
     if(!v){t.value=S.meta.exercises[i].name;return;}
     S.meta.exercises[i].name=v;Store.saveMeta().catch(function(){});
   }else if(k==='cname'){
     if(!v){t.value=S.meta.cardio[i];return;}
+    var old=S.meta.cardio[i];
+    if(old!==v){
+      S.meta.cardioDesc=S.meta.cardioDesc||{};
+      if(S.meta.cardioDesc[old]){S.meta.cardioDesc[v]=S.meta.cardioDesc[old];delete S.meta.cardioDesc[old];}
+      ['c:'+old].forEach(function(ok){var nk='c:'+v;if(S.descOpenList[ok]){S.descOpenList[nk]=true;delete S.descOpenList[ok];}if(S.descDraft[ok]!==undefined){S.descDraft[nk]=S.descDraft[ok];delete S.descDraft[ok];}});
+    }
     S.meta.cardio[i]=v;Store.saveMeta().catch(function(){});
   }
 });
