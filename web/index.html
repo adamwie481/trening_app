@@ -154,6 +154,7 @@ textarea.desc1{min-height:68px;height:68px;overflow-y:auto;resize:none;padding-b
 .chart .z{fill:var(--line)}
 .chart .base{stroke:var(--line);stroke-width:1}
 .chart text{font:600 12px var(--f-body);fill:var(--muted);text-anchor:middle}
+.chart text.w{font-size:11px;letter-spacing:-.2px}
 .chart text.v{fill:var(--ink);font-size:13px}
 .xc{display:grid;grid-template-columns:minmax(0,1fr) 96px;gap:10px;align-items:center;width:100%;text-align:left;background:transparent;border:0;padding:0}
 .xc .l{display:flex;flex-direction:column;gap:6px;min-width:0}
@@ -522,14 +523,14 @@ function weekBars(ws){
   for(var i=7;i>=0;i--){var d=addDays(base,-7*i);weeks.push({k:iso(d),n:0,d:d});}
   ws.forEach(function(w){var k=iso(weekStart(parseD(w.date)));weeks.forEach(function(x){if(x.k===k)x.n++;});});
   var max=Math.max(2,Math.max.apply(null,weeks.map(function(x){return x.n;})));
-  var W=320,H=124,pb=24,pt=18,step=40,bw=26,x0=(W-8*step)/2+(step-bw)/2;
+  var W=320,H=140,pb=40,pt=18,step=40,bw=26,x0=(W-8*step)/2+(step-bw)/2;
   var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(t('Liczba treningów w ostatnich 8 tygodniach'))+'">';
   s+='<line class="base" x1="0" x2="'+W+'" y1="'+(H-pb)+'" y2="'+(H-pb)+'"/>';
   weeks.forEach(function(x,i){
     var cx=x0+i*step+bw/2,h=x.n/max*(H-pb-pt),y=H-pb-h,cur=i===7;
     if(x.n>0){s+='<rect class="b'+(cur?'':' old')+'" x="'+(x0+i*step)+'" y="'+y.toFixed(1)+'" width="'+bw+'" height="'+h.toFixed(1)+'" rx="2"/><text class="v" x="'+cx+'" y="'+(y-5).toFixed(1)+'">'+x.n+'</text>';}
     else{s+='<rect class="z" x="'+(x0+i*step)+'" y="'+(H-pb-2)+'" width="'+bw+'" height="2"/>';}
-    s+='<text x="'+cx+'" y="'+(H-7)+'">'+dm(x.k)+'</text>';
+    s+='<text class="w" x="'+cx+'" y="'+(H-21)+'">'+dm(x.k)+'</text><text class="w" x="'+cx+'" y="'+(H-7)+'">\u2013'+dm(iso(addDays(x.d,6)))+'</text>';
   });
   return s+'</svg>';
 }
