@@ -1,10 +1,19 @@
-/* Tryb offline: przy dostępie do internetu zawsze pobiera najnowsze pliki,
-   bez internetu używa zapisanej kopii. */
-const CACHE = 'dziennik-v3';
+/* Aplikacja działa z zapisanej kopii (także offline). Nowa wersja pobiera się
+   dopiero po kliknięciu „Zaktualizuj teraz” w Ustawieniach. */
+const CACHE = 'dziennik-v4';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  e.waitUntil((async () => {
+    const c = await caches.open(CACHE);
+    await Promise.all(SHELL.map(async (u) => {
+      // zachowaj wersję, którą użytkownik już ma; pobierz z sieci tylko czego brakuje
+      const old = await caches.match(u);
+      if (old) { await c.put(u, old); return; }
+      try { await c.add(new Request(u, { cache: 'reload' })); } catch (err) {}
+    }));
+    await self.skipWaiting();
+  })());
 });
 self.addEventListener('activate', (e) => {
   e.waitUntil(
@@ -20,21 +29,10 @@ self.addEventListener('fetch', (e) => {
   const isFont = url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com';
   if (!sameOrigin && !isFont) return;
 
-  if (isFont) {
-    e.respondWith(
-      caches.match(req).then((hit) => hit || fetch(req).then((res) => {
-        if (res && (res.ok || res.type === 'opaque')) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
-        return res;
-      }))
-    );
-    return;
-  }
   e.respondWith(
-    fetch(req, { cache: 'no-cache' })
-      .then((res) => {
-        if (res && res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
-        return res;
-      })
-      .catch(() => caches.match(req, { ignoreSearch: true }).then((hit) => hit || (req.mode === 'navigate' ? caches.match('index.html') : undefined)))
+    caches.match(req, { ignoreSearch: true }).then((hit) => hit || fetch(req).then((res) => {
+      if (res && (res.ok || res.type === 'opaque')) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
+      return res;
+    }).catch(() => (req.mode === 'navigate' ? caches.match('index.html') : undefined)))
   );
 });
