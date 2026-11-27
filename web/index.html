@@ -154,6 +154,9 @@ textarea.desc1{min-height:68px;height:68px;overflow-y:auto;resize:none;padding-b
 .chart .z{fill:var(--line)}
 .chart .base{stroke:var(--line);stroke-width:1}
 .chart text{font:600 12px var(--f-body);fill:var(--muted);text-anchor:middle}
+.chart .ln{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;opacity:.75}
+.chart .dot{fill:var(--accent);opacity:.6}
+.chart .dot.cur{opacity:1}
 .chart text.w{font-size:11px;letter-spacing:-.2px}
 .chart text.v{fill:var(--ink);font-size:13px}
 .xc{display:grid;grid-template-columns:minmax(0,1fr) 96px;gap:10px;align-items:center;width:100%;text-align:left;background:transparent;border:0;padding:0}
@@ -179,6 +182,12 @@ textarea.desc1{min-height:68px;height:68px;overflow-y:auto;resize:none;padding-b
 .empty p{color:var(--muted)}
 .exlist{display:flex;flex-direction:column;gap:8px}
 .exrow{display:flex;gap:8px}
+select.txt{appearance:auto;min-height:40px;padding:6px 10px;font-size:15px}
+.cathead{font:600 13px var(--f-body);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:14px 0 4px}
+.sheet .cathead{padding:12px 0 2px}
+.durrow{display:flex;align-items:center;gap:10px;margin-top:10px}
+.durrow label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.durrow select.txt{width:auto;min-width:88px;min-height:46px;font-size:18px;font-weight:600}
 .foot-note{font-size:13px;color:var(--muted);margin-top:18px}
 .top{position:relative}
 .gear{position:absolute;top:14px;right:0;width:48px;height:48px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);display:flex;align-items:center;justify-content:center;padding:0}
@@ -232,7 +241,7 @@ var APP_BUILD='__BUILD__',APP_BUILT='__BUILT__';
 var isDev=APP_BUILD.indexOf('__')===0;
 var THEME_KEY='dz-theme';
 var LANGS=['pl','en','de'],LOC={pl:'pl-PL',en:'en-GB',de:'de-DE'},LANG_KEY='dz-lang';
-var I18N={"Dziennik treningowy":["Workout Log","Trainingstagebuch"],"Nawigacja":["Navigation","Navigation"],"Treningi":["Workouts","Trainings"],"Kalendarz":["Calendar","Kalender"],"Postępy":["Progress","Fortschritt"],"Ćwiczenia":["Exercises","Übungen"],"+ Ćwiczenia":["+ Exercises","+ Übungen"],"+ Cardio":["+ Cardio","+ Cardio"],"Gotowe":["Done","Fertig"],"Wczytywanie…":["Loading…","Wird geladen…"],"Zamknij":["Close","Schließen"],"Wróć":["Back","Zurück"],"Usuń":["Delete","Löschen"],"Dodaj":["Add","Hinzufügen"],"Utwórz":["Create","Erstellen"],"Potwierdź":["Confirm","Bestätigen"],"Dzisiaj":["Today","Heute"],"Cardio":["Cardio","Cardio"],"Siłownia":["Gym","Fitnessstudio"],"{n} {w} · ostatni {d}":["{n} {w} · last {d}","{n} {w} · zuletzt {d}"],"Twoje treningi w jednym miejscu":["Your workouts in one place","Deine Trainings an einem Ort"],"Brak treningów":["No workouts yet","Noch keine Trainings"],"Dodaj pierwszy trening. Jeśli masz kopię zapasową, wczytasz ją w ustawieniach (ikona zębatki).":["Add your first workout. If you have a backup, you can restore it in settings (gear icon).","Füge dein erstes Training hinzu. Wenn du eine Sicherung hast, kannst du sie in den Einstellungen (Zahnrad-Symbol) laden."],"Zacznij nowy trening":["Start a new workout","Neues Training beginnen"],"Otwórz ustawienia":["Open settings","Einstellungen öffnen"],"Tylko cardio":["Cardio only","Nur Cardio"],"Nowy trening":["New workout","Neues Training"],"trening|treningi|treningów":["workout|workouts","Training|Trainings"],"ćwiczenie|ćwiczenia|ćwiczeń":["exercise|exercises","Übung|Übungen"],"seria|serie|serii":["set|sets","Satz|Sätze"],"serii|seriach|seriach":["set|sets","Satz|Sätzen"],"zapis|zapisy|zapisów":["entry|entries","Eintrag|Einträge"],"Poprzedni miesiąc":["Previous month","Vorheriger Monat"],"Następny miesiąc":["Next month","Nächster Monat"],"Dni miesiąca":["Days of the month","Tage des Monats"],"Pn":["Mo","Mo"],"Wt":["Tu","Di"],"Śr":["We","Mi"],"Cz":["Th","Do"],"Pt":["Fr","Fr"],"So":["Sa","Sa"],"Nd":["Su","So"],", dzień treningowy":[", workout day",", Trainingstag"],"Treningi w tym miesiącu: {n}":["Workouts this month: {n}","Trainings in diesem Monat: {n}"],"W tym miesiącu brak treningów":["No workouts this month","Keine Trainings in diesem Monat"],"zielony dzień z ptaszkiem to trening":["a green day with a check mark is a workout","ein grüner Tag mit Haken ist ein Training"],"Kliknij dzień, aby zobaczyć szczegóły.":["Tap a day to see the details.","Tippe auf einen Tag, um die Details zu sehen."],"Szczegóły dnia":["Day details","Tagesdetails"],"Brak treningu":["No workout","Kein Training"],"Dodaj trening w tym dniu":["Add a workout on this day","Training an diesem Tag hinzufügen"],"{n} kg tonażu":["{n} kg volume","{n} kg Volumen"],"Edytuj trening":["Edit workout","Training bearbeiten"],"Statystyki z Twoich treningów":["Statistics from your workouts","Statistiken aus deinen Trainings"],"Brak danych. Zapisz pierwszy trening, a tutaj pojawią się statystyki i trendy ćwiczeń.":["No data yet. Save your first workout and statistics and exercise trends will appear here.","Noch keine Daten. Speichere dein erstes Training, dann erscheinen hier Statistiken und Trends."],"Zakres":["Range","Zeitraum"],"30 dni":["30 days","30 Tage"],"90 dni":["90 days","90 Tage"],"Wszystko":["All","Alles"],"Podsumowanie":["Summary","Zusammenfassung"],"średnio na tydzień":["on average per week","im Schnitt pro Woche"],"kg tonażu w {n} {w}":["kg volume in {n} {w}","kg Volumen in {n} {w}"],"km cardio":["km cardio","km Cardio"],"Treningi w tygodniach":["Workouts per week","Trainings pro Woche"],"Liczba treningów w ostatnich 8 tygodniach":["Number of workouts in the last 8 weeks","Anzahl der Trainings in den letzten 8 Wochen"],"Ostatnio {d}: {v} kg tonażu":["Last on {d}: {v} kg volume","Zuletzt am {d}: {v} kg Volumen"]," (poprzednio {v})":[" (previous {v})"," (davor {v})"],"Najcięższa seria: {kg} kg ({d} kg)":["Heaviest set: {kg} kg ({d} kg)","Schwerster Satz: {kg} kg ({d} kg)"],"Od pierwszego zapisu: {p} tonażu":["Since first entry: {p} volume","Seit dem ersten Eintrag: {p} Volumen"],"Rekord: {kg} kg ({d})":["Record: {kg} kg ({d})","Rekord: {kg} kg ({d})"],"Szac. 1RM: ~{v} kg":["Est. 1RM: ~{v} kg","Gesch. 1RM: ~{v} kg"],"Ostatnio {d}: {v} km/h":["Last on {d}: {v} km/h","Zuletzt am {d}: {v} km/h"],"Ostatnio {d}":["Last on {d}","Zuletzt am {d}"],"▲ Progres {p}":["▲ Progress {p}","▲ Fortschritt {p}"],"▼ Regres {p}":["▼ Decline {p}","▼ Rückschritt {p}"],"● Bez zmian":["● No change","● Unverändert"],"Pierwszy zapis":["First entry","Erster Eintrag"],"Tonaż to suma powtórzeń × ciężar ze wszystkich serii. Progres i regres porównują dwa ostatnie treningi danego ćwiczenia (zmiana powyżej 2%). Szac. 1RM liczony wzorem Epleya z serii do 12 powtórzeń.":["Volume is the sum of reps × weight across all sets. Progress and decline compare the last two workouts of an exercise (a change above 2%). Est. 1RM is calculated with the Epley formula from sets of up to 12 reps.","Volumen ist die Summe aus Wiederholungen × Gewicht über alle Sätze. Fortschritt und Rückschritt vergleichen die letzten beiden Trainings einer Übung (Änderung über 2 %). Der geschätzte 1RM wird mit der Epley-Formel aus Sätzen mit bis zu 12 Wiederholungen berechnet."],"Twoja lista do wybierania w treningu":["Your list to choose from in a workout","Deine Auswahlliste für das Training"],"Ukryj opis":["Hide description","Beschreibung ausblenden"],"Pokaż opis":["Show description","Beschreibung anzeigen"],"Nazwa ćwiczenia":["Exercise name","Name der Übung"],"Opis ćwiczenia (np. maszyna, chwyt, ustawienie)":["Exercise description (e.g. machine, grip, setup)","Beschreibung der Übung (z. B. Gerät, Griff, Einstellung)"],"Nazwa urządzenia":["Machine name","Name des Geräts"],"Opis urządzenia (np. ustawienie, nachylenie, tempo)":["Machine description (e.g. setup, incline, pace)","Beschreibung des Geräts (z. B. Einstellung, Steigung, Tempo)"],"Nowe ćwiczenie":["New exercise","Neue Übung"],"Nowe urządzenie":["New machine","Neues Gerät"],"Usunięcie z listy nie kasuje historii. Dawne treningi zostają w treningach i statystykach.":["Removing from the list does not delete history. Past workouts stay in your workouts and statistics.","Das Entfernen aus der Liste löscht den Verlauf nicht. Frühere Trainings bleiben in den Trainings und Statistiken erhalten."],"Biceps":["Biceps","Bizeps"],"Kaptury":["Shrugs","Schulterheben"],"Klatka i triceps":["Chest and triceps","Brust und Trizeps"],"Rozpiętki":["Chest flyes","Fliegende"],"Ściąganie do klatki":["Lat pulldown","Latziehen"],"Grzbiet":["Back","Rücken"],"Rowerek stacjonarny":["Exercise bike","Heimtrainer"],"Bieżnia":["Treadmill","Laufband"],"Ustawienia":["Settings","Einstellungen"],"Wygląd":["Appearance","Darstellung"],"Motyw":["Theme","Design"],"Systemowy":["System","System"],"Jasny":["Light","Hell"],"Ciemny":["Dark","Dunkel"],"Systemowy dopasowuje się do ustawień telefonu.":["System follows your phone settings.","System folgt den Einstellungen deines Telefons."],"Język":["Language","Sprache"],"Aplikacja":["App","App"],"Wersja: {v}":["Version: {v}","Version: {v}"],"lokalna (rozwojowa)":["local (development)","lokal (Entwicklung)"],"Sprawdź aktualizacje":["Check for updates","Nach Updates suchen"],"Dane":["Data","Daten"],"Treningi zapisują się w pamięci tej aplikacji na telefonie. Zrób kopię zapasową przed czyszczeniem danych przeglądarki lub zmianą telefonu.":["Workouts are saved in this app's storage on your phone. Make a backup before clearing browser data or switching phones.","Trainings werden im Speicher dieser App auf deinem Telefon gesichert. Erstelle eine Sicherung, bevor du Browserdaten löschst oder das Telefon wechselst."],"Zapisz kopię zapasową (JSON)":["Save backup (JSON)","Sicherung speichern (JSON)"],"Wczytaj kopię zapasową":["Restore backup","Sicherung laden"],"Pobierz wszystko jako CSV":["Download everything as CSV","Alles als CSV herunterladen"],"Skopiuj kopię jako tekst":["Copy backup as text","Sicherung als Text kopieren"],"Wklej kopię z tekstu":["Paste backup from text","Sicherung aus Text einfügen"],"Sprawdzam…":["Checking…","Prüfe…"],"Nie udało się sprawdzić. Połącz się z internetem i spróbuj ponownie.":["Could not check. Connect to the internet and try again.","Prüfung fehlgeschlagen. Verbinde dich mit dem Internet und versuche es erneut."],"Dostępna nowa wersja: {v}.":["A new version is available: {v}.","Eine neue Version ist verfügbar: {v}."],"Zaktualizuj teraz":["Update now","Jetzt aktualisieren"],"Twoje treningi zostają bez zmian.":["Your workouts stay unchanged.","Deine Trainings bleiben unverändert."],"Masz najnowszą wersję ({v}).":["You have the latest version ({v}).","Du hast die neueste Version ({v})."],"Aktualizuję…":["Updating…","Aktualisiere…"],"Skopiuj do schowka":["Copy to clipboard","In die Zwischenablage kopieren"],"Wklej tutaj zawartość kopii zapasowej (tekst zaczynający się od {\"app\":\"dziennik-treningowy\"…).":["Paste the backup contents here (text starting with {\"app\":\"dziennik-treningowy\"…).","Füge hier den Inhalt der Sicherung ein (Text, der mit {\"app\":\"dziennik-treningowy\"… beginnt)."],"Wklej kopię zapasową":["Paste backup","Sicherung einfügen"],"Wczytaj wklejone dane":["Load pasted data","Eingefügte Daten laden"],"Skopiowano. Wklej do notatki lub e-maila.":["Copied. Paste it into a note or an email.","Kopiert. Füge es in eine Notiz oder E-Mail ein."],"Nie udało się skopiować automatycznie. Zaznacz tekst i skopiuj ręcznie.":["Could not copy automatically. Select the text and copy it manually.","Automatisches Kopieren fehlgeschlagen. Markiere den Text und kopiere ihn manuell."],"Zapisz lub wyślij plik":["Save or send the file","Datei speichern oder senden"],"Wybierz, gdzie zapisać plik (np. Dysk Google, Pliki albo e-mail).":["Choose where to save the file (e.g. Google Drive, Files or email).","Wähle, wo die Datei gespeichert werden soll (z. B. Google Drive, Dateien oder E-Mail)."],"Anulowano.":["Cancelled.","Abgebrochen."],"Zapis pliku nie jest tu dostępny. Skopiuj zawartość i wklej do notatki lub e-maila, a potem zapisz ją jako plik.":["Saving files is not available here. Copy the contents, paste them into a note or an email, then save it as a file.","Das Speichern von Dateien ist hier nicht verfügbar. Kopiere den Inhalt, füge ihn in eine Notiz oder E-Mail ein und speichere ihn dann als Datei."],"Plik zapisany w pobranych. Jeśli go nie widzisz, użyj „Skopiuj kopię jako tekst”.":["File saved to downloads. If you do not see it, use “Copy backup as text”.","Datei in den Downloads gespeichert. Wenn du sie nicht siehst, nutze „Sicherung als Text kopieren“."],"Nie udało się zapisać pliku. Skopiuj zawartość ręcznie.":["Could not save the file. Copy the contents manually.","Datei konnte nicht gespeichert werden. Kopiere den Inhalt manuell."],"Wczytano {n} {w} z kopii.":["Restored {n} {w} from the backup.","{n} {w} aus der Sicherung geladen."],"To nie jest poprawna kopia z tej aplikacji.":["This is not a valid backup from this app.","Das ist keine gültige Sicherung aus dieser App."],"Nie udało się odczytać pliku. Użyj „Wklej kopię z tekstu”.":["Could not read the file. Use “Paste backup from text”.","Datei konnte nicht gelesen werden. Nutze „Sicherung aus Text einfügen“."],"Skopiuj ten tekst i zapisz go w notatce lub wyślij sobie e-mailem. Wczytasz go przyciskiem „Wklej kopię z tekstu”.":["Copy this text and save it in a note or email it to yourself. You can restore it with the “Paste backup from text” button.","Kopiere diesen Text und speichere ihn in einer Notiz oder sende ihn dir per E-Mail. Du kannst ihn mit der Schaltfläche „Sicherung aus Text einfügen“ laden."],"data":["date","Datum"],"typ":["type","Typ"],"nazwa":["name","Name"],"seria":["set","Satz"],"powtórzenia":["reps","Wiederholungen"],"minuty":["minutes","Minuten"],"notatka":["note","Notiz"],"siłownia":["gym","Fitnessstudio"],"cardio":["cardio","Cardio"],"Wróć do treningów":["Back to workouts","Zurück zu den Trainings"],"Niezapisane zmiany":["Unsaved changes","Nicht gespeicherte Änderungen"],"Niezapisane zmiany. Kliknij zielony ptaszek, aby zatwierdzić.":["Unsaved changes. Tap the green check to confirm.","Nicht gespeicherte Änderungen. Tippe auf den grünen Haken, um zu bestätigen."],"Zapisano ✓":["Saved ✓","Gespeichert ✓"],"Zapisywanie…":["Saving…","Speichern…"],"Limit danych jest pełny. Usuń stare treningi.":["Data limit reached. Delete old workouts.","Datenlimit erreicht. Lösche alte Trainings."],"Nie zapisano. Zmień coś, aby spróbować ponownie.":["Not saved. Change something to try again.","Nicht gespeichert. Ändere etwas, um es erneut zu versuchen."],"Zmień datę treningu":["Change workout date","Trainingsdatum ändern"],"Notatka do treningu, np. miałem mało czasu":["Workout note, e.g. I was short on time","Notiz zum Training, z. B. ich hatte wenig Zeit"],"Notatka do treningu":["Workout note","Notiz zum Training"],"Opis: {name}":["Description: {name}","Beschreibung: {name}"],"Zatwierdź opis":["Confirm description","Beschreibung bestätigen"],"Opis urządzenia":["Machine description","Gerätebeschreibung"],"Opis ćwiczenia":["Exercise description","Übungsbeschreibung"],"Brak opisu. Dodasz go w zakładce Ćwiczenia.":["No description. You can add one in the Exercises tab.","Keine Beschreibung. Du kannst sie im Tab „Übungen“ hinzufügen."],"Poprzednio {d}: {v}":["Previous {d}: {v}","Vorher {d}: {v}"],"czas (min)":["time (min)","Zeit (min)"],"Wybierz ćwiczenia z listy. Możesz zaznaczyć kilka naraz i uzupełniać je naprzemiennie.":["Choose exercises from the list. You can select several at once and fill them in alternately.","Wähle Übungen aus der Liste. Du kannst mehrere gleichzeitig auswählen und abwechselnd ausfüllen."],"Wybierz ćwiczenia":["Choose exercises","Übungen auswählen"],"powt.":["reps","Wdh."],"Powtórzenia, seria {n}":["Reps, set {n}","Wiederholungen, Satz {n}"],"Ciężar w kg, seria {n}":["Weight in kg, set {n}","Gewicht in kg, Satz {n}"],"Usuń serię {n}":["Delete set {n}","Satz {n} löschen"],"+ Seria":["+ Set","+ Satz"],"Wstaw z poprzedniego":["Copy from previous","Vom letzten übernehmen"],"Notatka do ćwiczenia, np. bolał bark":["Exercise note, e.g. my shoulder hurt","Notiz zur Übung, z. B. Schulter tat weh"],"Notatka do ćwiczenia":["Exercise note","Notiz zur Übung"],"Usuń cały trening":["Delete the whole workout","Ganzes Training löschen"],"Wybierz datę treningu":["Choose workout date","Trainingsdatum wählen"],"Data treningu":["Workout date","Trainingsdatum"],", jest już trening":[", already has a workout",", hat bereits ein Training"],"Zielone dni mają już zapisany trening.":["Green days already have a workout saved.","Grüne Tage haben bereits ein gespeichertes Training."],"w treningu":["in workout","im Training"],"Dodaj cardio":["Add cardio","Cardio hinzufügen"],"Dodaj ćwiczenia":["Add exercises","Übungen hinzufügen"],"Dodaj do treningu":["Add to workout","Zum Training hinzufügen"],"Dodaj do treningu ({n})":["Add to workout ({n})","Zum Training hinzufügen ({n})"],"Nie można teraz połączyć się z zapisem. Widoczne dane mogą być nieaktualne.":["Cannot connect to storage right now. The data shown may be out of date.","Speicher ist gerade nicht erreichbar. Die angezeigten Daten sind möglicherweise veraltet."],"Zapis w koncie jest niedostępny ({code}). Dane zostają tylko w tej karcie.":["Account storage is unavailable ({code}). Data stays only in this tab.","Der Kontospeicher ist nicht verfügbar ({code}). Die Daten bleiben nur in diesem Tab."],"błąd":["error","Fehler"]};
+var I18N={"Dziennik treningowy":["Workout Log","Trainingstagebuch"],"Nawigacja":["Navigation","Navigation"],"Treningi":["Workouts","Trainings"],"Kalendarz":["Calendar","Kalender"],"Postępy":["Progress","Fortschritt"],"Ćwiczenia":["Exercises","Übungen"],"+ Ćwiczenia":["+ Exercises","+ Übungen"],"+ Cardio":["+ Cardio","+ Cardio"],"Gotowe":["Done","Fertig"],"Wczytywanie…":["Loading…","Wird geladen…"],"Zamknij":["Close","Schließen"],"Wróć":["Back","Zurück"],"Usuń":["Delete","Löschen"],"Dodaj":["Add","Hinzufügen"],"Utwórz":["Create","Erstellen"],"Potwierdź":["Confirm","Bestätigen"],"Dzisiaj":["Today","Heute"],"Cardio":["Cardio","Cardio"],"Siłownia":["Gym","Fitnessstudio"],"{n} {w} · ostatni {d}":["{n} {w} · last {d}","{n} {w} · zuletzt {d}"],"Twoje treningi w jednym miejscu":["Your workouts in one place","Deine Trainings an einem Ort"],"Brak treningów":["No workouts yet","Noch keine Trainings"],"Dodaj pierwszy trening. Jeśli masz kopię zapasową, wczytasz ją w ustawieniach (ikona zębatki).":["Add your first workout. If you have a backup, you can restore it in settings (gear icon).","Füge dein erstes Training hinzu. Wenn du eine Sicherung hast, kannst du sie in den Einstellungen (Zahnrad-Symbol) laden."],"Zacznij nowy trening":["Start a new workout","Neues Training beginnen"],"Otwórz ustawienia":["Open settings","Einstellungen öffnen"],"Tylko cardio":["Cardio only","Nur Cardio"],"Nowy trening":["New workout","Neues Training"],"trening|treningi|treningów":["workout|workouts","Training|Trainings"],"ćwiczenie|ćwiczenia|ćwiczeń":["exercise|exercises","Übung|Übungen"],"seria|serie|serii":["set|sets","Satz|Sätze"],"serii|seriach|seriach":["set|sets","Satz|Sätzen"],"zapis|zapisy|zapisów":["entry|entries","Eintrag|Einträge"],"Poprzedni miesiąc":["Previous month","Vorheriger Monat"],"Następny miesiąc":["Next month","Nächster Monat"],"Dni miesiąca":["Days of the month","Tage des Monats"],"Pn":["Mo","Mo"],"Wt":["Tu","Di"],"Śr":["We","Mi"],"Cz":["Th","Do"],"Pt":["Fr","Fr"],"So":["Sa","Sa"],"Nd":["Su","So"],", dzień treningowy":[", workout day",", Trainingstag"],"Treningi w tym miesiącu: {n}":["Workouts this month: {n}","Trainings in diesem Monat: {n}"],"W tym miesiącu brak treningów":["No workouts this month","Keine Trainings in diesem Monat"],"zielony dzień z ptaszkiem to trening":["a green day with a check mark is a workout","ein grüner Tag mit Haken ist ein Training"],"Kliknij dzień, aby zobaczyć szczegóły.":["Tap a day to see the details.","Tippe auf einen Tag, um die Details zu sehen."],"Szczegóły dnia":["Day details","Tagesdetails"],"Brak treningu":["No workout","Kein Training"],"Dodaj trening w tym dniu":["Add a workout on this day","Training an diesem Tag hinzufügen"],"{n} kg tonażu":["{n} kg volume","{n} kg Volumen"],"Edytuj trening":["Edit workout","Training bearbeiten"],"Statystyki z Twoich treningów":["Statistics from your workouts","Statistiken aus deinen Trainings"],"Brak danych. Zapisz pierwszy trening, a tutaj pojawią się statystyki i trendy ćwiczeń.":["No data yet. Save your first workout and statistics and exercise trends will appear here.","Noch keine Daten. Speichere dein erstes Training, dann erscheinen hier Statistiken und Trends."],"Zakres":["Range","Zeitraum"],"30 dni":["30 days","30 Tage"],"90 dni":["90 days","90 Tage"],"Wszystko":["All","Alles"],"Podsumowanie":["Summary","Zusammenfassung"],"średnio na tydzień":["on average per week","im Schnitt pro Woche"],"kg tonażu w {n} {w}":["kg volume in {n} {w}","kg Volumen in {n} {w}"],"km cardio":["km cardio","km Cardio"],"Treningi w tygodniach":["Workouts per week","Trainings pro Woche"],"Liczba treningów w ostatnich 8 tygodniach":["Number of workouts in the last 8 weeks","Anzahl der Trainings in den letzten 8 Wochen"],"Ostatnio {d}: {v} kg tonażu":["Last on {d}: {v} kg volume","Zuletzt am {d}: {v} kg Volumen"]," (poprzednio {v})":[" (previous {v})"," (davor {v})"],"Najcięższa seria: {kg} kg ({d} kg)":["Heaviest set: {kg} kg ({d} kg)","Schwerster Satz: {kg} kg ({d} kg)"],"Od pierwszego zapisu: {p} tonażu":["Since first entry: {p} volume","Seit dem ersten Eintrag: {p} Volumen"],"Rekord: {kg} kg ({d})":["Record: {kg} kg ({d})","Rekord: {kg} kg ({d})"],"Szac. 1RM: ~{v} kg":["Est. 1RM: ~{v} kg","Gesch. 1RM: ~{v} kg"],"Ostatnio {d}: {v} km/h":["Last on {d}: {v} km/h","Zuletzt am {d}: {v} km/h"],"Ostatnio {d}":["Last on {d}","Zuletzt am {d}"],"▲ Progres {p}":["▲ Progress {p}","▲ Fortschritt {p}"],"▼ Regres {p}":["▼ Decline {p}","▼ Rückschritt {p}"],"● Bez zmian":["● No change","● Unverändert"],"Pierwszy zapis":["First entry","Erster Eintrag"],"Tonaż to suma powtórzeń × ciężar ze wszystkich serii. Progres i regres porównują dwa ostatnie treningi danego ćwiczenia (zmiana powyżej 2%). Szac. 1RM liczony wzorem Epleya z serii do 12 powtórzeń.":["Volume is the sum of reps × weight across all sets. Progress and decline compare the last two workouts of an exercise (a change above 2%). Est. 1RM is calculated with the Epley formula from sets of up to 12 reps.","Volumen ist die Summe aus Wiederholungen × Gewicht über alle Sätze. Fortschritt und Rückschritt vergleichen die letzten beiden Trainings einer Übung (Änderung über 2 %). Der geschätzte 1RM wird mit der Epley-Formel aus Sätzen mit bis zu 12 Wiederholungen berechnet."],"Twoja lista do wybierania w treningu":["Your list to choose from in a workout","Deine Auswahlliste für das Training"],"Ukryj opis":["Hide description","Beschreibung ausblenden"],"Pokaż opis":["Show description","Beschreibung anzeigen"],"Nazwa ćwiczenia":["Exercise name","Name der Übung"],"Opis ćwiczenia (np. maszyna, chwyt, ustawienie)":["Exercise description (e.g. machine, grip, setup)","Beschreibung der Übung (z. B. Gerät, Griff, Einstellung)"],"Nazwa urządzenia":["Machine name","Name des Geräts"],"Opis urządzenia (np. ustawienie, nachylenie, tempo)":["Machine description (e.g. setup, incline, pace)","Beschreibung des Geräts (z. B. Einstellung, Steigung, Tempo)"],"Nowe ćwiczenie":["New exercise","Neue Übung"],"Nowe urządzenie":["New machine","Neues Gerät"],"Usunięcie z listy nie kasuje historii. Dawne treningi zostają w treningach i statystykach.":["Removing from the list does not delete history. Past workouts stay in your workouts and statistics.","Das Entfernen aus der Liste löscht den Verlauf nicht. Frühere Trainings bleiben in den Trainings und Statistiken erhalten."],"Biceps":["Biceps","Bizeps"],"Kaptury":["Shrugs","Schulterheben"],"Klatka i triceps":["Chest and triceps","Brust und Trizeps"],"Rozpiętki":["Chest flyes","Fliegende"],"Ściąganie do klatki":["Lat pulldown","Latziehen"],"Grzbiet":["Back","Rücken"],"Rowerek stacjonarny":["Exercise bike","Heimtrainer"],"Bieżnia":["Treadmill","Laufband"],"Ustawienia":["Settings","Einstellungen"],"Wygląd":["Appearance","Darstellung"],"Motyw":["Theme","Design"],"Systemowy":["System","System"],"Jasny":["Light","Hell"],"Ciemny":["Dark","Dunkel"],"Systemowy dopasowuje się do ustawień telefonu.":["System follows your phone settings.","System folgt den Einstellungen deines Telefons."],"Język":["Language","Sprache"],"Aplikacja":["App","App"],"Wersja: {v}":["Version: {v}","Version: {v}"],"lokalna (rozwojowa)":["local (development)","lokal (Entwicklung)"],"Sprawdź aktualizacje":["Check for updates","Nach Updates suchen"],"Dane":["Data","Daten"],"Treningi zapisują się w pamięci tej aplikacji na telefonie. Zrób kopię zapasową przed czyszczeniem danych przeglądarki lub zmianą telefonu.":["Workouts are saved in this app's storage on your phone. Make a backup before clearing browser data or switching phones.","Trainings werden im Speicher dieser App auf deinem Telefon gesichert. Erstelle eine Sicherung, bevor du Browserdaten löschst oder das Telefon wechselst."],"Zapisz kopię zapasową (JSON)":["Save backup (JSON)","Sicherung speichern (JSON)"],"Wczytaj kopię zapasową":["Restore backup","Sicherung laden"],"Pobierz wszystko jako CSV":["Download everything as CSV","Alles als CSV herunterladen"],"Skopiuj kopię jako tekst":["Copy backup as text","Sicherung als Text kopieren"],"Wklej kopię z tekstu":["Paste backup from text","Sicherung aus Text einfügen"],"Sprawdzam…":["Checking…","Prüfe…"],"Nie udało się sprawdzić. Połącz się z internetem i spróbuj ponownie.":["Could not check. Connect to the internet and try again.","Prüfung fehlgeschlagen. Verbinde dich mit dem Internet und versuche es erneut."],"Dostępna nowa wersja: {v}.":["A new version is available: {v}.","Eine neue Version ist verfügbar: {v}."],"Zaktualizuj teraz":["Update now","Jetzt aktualisieren"],"Twoje treningi zostają bez zmian.":["Your workouts stay unchanged.","Deine Trainings bleiben unverändert."],"Masz najnowszą wersję ({v}).":["You have the latest version ({v}).","Du hast die neueste Version ({v})."],"Aktualizuję…":["Updating…","Aktualisiere…"],"Skopiuj do schowka":["Copy to clipboard","In die Zwischenablage kopieren"],"Wklej tutaj zawartość kopii zapasowej (tekst zaczynający się od {\"app\":\"dziennik-treningowy\"…).":["Paste the backup contents here (text starting with {\"app\":\"dziennik-treningowy\"…).","Füge hier den Inhalt der Sicherung ein (Text, der mit {\"app\":\"dziennik-treningowy\"… beginnt)."],"Wklej kopię zapasową":["Paste backup","Sicherung einfügen"],"Wczytaj wklejone dane":["Load pasted data","Eingefügte Daten laden"],"Skopiowano. Wklej do notatki lub e-maila.":["Copied. Paste it into a note or an email.","Kopiert. Füge es in eine Notiz oder E-Mail ein."],"Nie udało się skopiować automatycznie. Zaznacz tekst i skopiuj ręcznie.":["Could not copy automatically. Select the text and copy it manually.","Automatisches Kopieren fehlgeschlagen. Markiere den Text und kopiere ihn manuell."],"Zapisz lub wyślij plik":["Save or send the file","Datei speichern oder senden"],"Wybierz, gdzie zapisać plik (np. Dysk Google, Pliki albo e-mail).":["Choose where to save the file (e.g. Google Drive, Files or email).","Wähle, wo die Datei gespeichert werden soll (z. B. Google Drive, Dateien oder E-Mail)."],"Anulowano.":["Cancelled.","Abgebrochen."],"Zapis pliku nie jest tu dostępny. Skopiuj zawartość i wklej do notatki lub e-maila, a potem zapisz ją jako plik.":["Saving files is not available here. Copy the contents, paste them into a note or an email, then save it as a file.","Das Speichern von Dateien ist hier nicht verfügbar. Kopiere den Inhalt, füge ihn in eine Notiz oder E-Mail ein und speichere ihn dann als Datei."],"Plik zapisany w pobranych. Jeśli go nie widzisz, użyj „Skopiuj kopię jako tekst”.":["File saved to downloads. If you do not see it, use “Copy backup as text”.","Datei in den Downloads gespeichert. Wenn du sie nicht siehst, nutze „Sicherung als Text kopieren“."],"Nie udało się zapisać pliku. Skopiuj zawartość ręcznie.":["Could not save the file. Copy the contents manually.","Datei konnte nicht gespeichert werden. Kopiere den Inhalt manuell."],"Wczytano {n} {w} z kopii.":["Restored {n} {w} from the backup.","{n} {w} aus der Sicherung geladen."],"To nie jest poprawna kopia z tej aplikacji.":["This is not a valid backup from this app.","Das ist keine gültige Sicherung aus dieser App."],"Nie udało się odczytać pliku. Użyj „Wklej kopię z tekstu”.":["Could not read the file. Use “Paste backup from text”.","Datei konnte nicht gelesen werden. Nutze „Sicherung aus Text einfügen“."],"Skopiuj ten tekst i zapisz go w notatce lub wyślij sobie e-mailem. Wczytasz go przyciskiem „Wklej kopię z tekstu”.":["Copy this text and save it in a note or email it to yourself. You can restore it with the “Paste backup from text” button.","Kopiere diesen Text und speichere ihn in einer Notiz oder sende ihn dir per E-Mail. Du kannst ihn mit der Schaltfläche „Sicherung aus Text einfügen“ laden."],"data":["date","Datum"],"typ":["type","Typ"],"nazwa":["name","Name"],"seria":["set","Satz"],"powtórzenia":["reps","Wiederholungen"],"minuty":["minutes","Minuten"],"notatka":["note","Notiz"],"siłownia":["gym","Fitnessstudio"],"cardio":["cardio","Cardio"],"Wróć do treningów":["Back to workouts","Zurück zu den Trainings"],"Niezapisane zmiany":["Unsaved changes","Nicht gespeicherte Änderungen"],"Niezapisane zmiany. Kliknij zielony ptaszek, aby zatwierdzić.":["Unsaved changes. Tap the green check to confirm.","Nicht gespeicherte Änderungen. Tippe auf den grünen Haken, um zu bestätigen."],"Zapisano ✓":["Saved ✓","Gespeichert ✓"],"Zapisywanie…":["Saving…","Speichern…"],"Limit danych jest pełny. Usuń stare treningi.":["Data limit reached. Delete old workouts.","Datenlimit erreicht. Lösche alte Trainings."],"Nie zapisano. Zmień coś, aby spróbować ponownie.":["Not saved. Change something to try again.","Nicht gespeichert. Ändere etwas, um es erneut zu versuchen."],"Zmień datę treningu":["Change workout date","Trainingsdatum ändern"],"Notatka do treningu, np. miałem mało czasu":["Workout note, e.g. I was short on time","Notiz zum Training, z. B. ich hatte wenig Zeit"],"Notatka do treningu":["Workout note","Notiz zum Training"],"Opis: {name}":["Description: {name}","Beschreibung: {name}"],"Zatwierdź opis":["Confirm description","Beschreibung bestätigen"],"Opis urządzenia":["Machine description","Gerätebeschreibung"],"Opis ćwiczenia":["Exercise description","Übungsbeschreibung"],"Brak opisu. Dodasz go w zakładce Ćwiczenia.":["No description. You can add one in the Exercises tab.","Keine Beschreibung. Du kannst sie im Tab „Übungen“ hinzufügen."],"Poprzednio {d}: {v}":["Previous {d}: {v}","Vorher {d}: {v}"],"czas (min)":["time (min)","Zeit (min)"],"Wybierz ćwiczenia z listy. Możesz zaznaczyć kilka naraz i uzupełniać je naprzemiennie.":["Choose exercises from the list. You can select several at once and fill them in alternately.","Wähle Übungen aus der Liste. Du kannst mehrere gleichzeitig auswählen und abwechselnd ausfüllen."],"Wybierz ćwiczenia":["Choose exercises","Übungen auswählen"],"powt.":["reps","Wdh."],"Powtórzenia, seria {n}":["Reps, set {n}","Wiederholungen, Satz {n}"],"Ciężar w kg, seria {n}":["Weight in kg, set {n}","Gewicht in kg, Satz {n}"],"Usuń serię {n}":["Delete set {n}","Satz {n} löschen"],"+ Seria":["+ Set","+ Satz"],"Wstaw z poprzedniego":["Copy from previous","Vom letzten übernehmen"],"Notatka do ćwiczenia, np. bolał bark":["Exercise note, e.g. my shoulder hurt","Notiz zur Übung, z. B. Schulter tat weh"],"Notatka do ćwiczenia":["Exercise note","Notiz zur Übung"],"Usuń cały trening":["Delete the whole workout","Ganzes Training löschen"],"Wybierz datę treningu":["Choose workout date","Trainingsdatum wählen"],"Data treningu":["Workout date","Trainingsdatum"],", jest już trening":[", already has a workout",", hat bereits ein Training"],"Zielone dni mają już zapisany trening.":["Green days already have a workout saved.","Grüne Tage haben bereits ein gespeichertes Training."],"w treningu":["in workout","im Training"],"Dodaj cardio":["Add cardio","Cardio hinzufügen"],"Dodaj ćwiczenia":["Add exercises","Übungen hinzufügen"],"Dodaj do treningu":["Add to workout","Zum Training hinzufügen"],"Dodaj do treningu ({n})":["Add to workout ({n})","Zum Training hinzufügen ({n})"],"Nie można teraz połączyć się z zapisem. Widoczne dane mogą być nieaktualne.":["Cannot connect to storage right now. The data shown may be out of date.","Speicher ist gerade nicht erreichbar. Die angezeigten Daten sind möglicherweise veraltet."],"Zapis w koncie jest niedostępny ({code}). Dane zostają tylko w tej karcie.":["Account storage is unavailable ({code}). Data stays only in this tab.","Der Kontospeicher ist nicht verfügbar ({code}). Die Daten bleiben nur in diesem Tab."],"błąd":["error","Fehler"],"Kategorie":["Categories","Kategorien"],"Kategoria":["Category","Kategorie"],"Bez kategorii":["Uncategorized","Ohne Kategorie"],"Nowa kategoria":["New category","Neue Kategorie"],"Nazwa kategorii":["Category name","Name der Kategorie"],"Kategorie są opcjonalne. Pomagają pogrupować ćwiczenia, np. według partii mięśni. Usunięcie kategorii nie usuwa ćwiczeń, trafią do „Bez kategorii”.":["Categories are optional. They help group exercises, e.g. by muscle group. Deleting a category does not delete its exercises; they move to “Uncategorized”.","Kategorien sind optional. Sie helfen, Übungen zu gruppieren, z. B. nach Muskelgruppen. Das Löschen einer Kategorie löscht die Übungen nicht, sie wandern nach „Ohne Kategorie“."],"czas treningu (min)":["workout duration (min)","Trainingsdauer (min)"],"Czas treningu":["Workout duration","Trainingsdauer"],"Czas treningu: {v}":["Duration: {v}","Dauer: {v}"],"Średnio {a} · najdłuższy {m}":["Average {a} · longest {m}","Durchschnitt {a} · längstes {m}"],"Czas trwania ostatnich treningów w minutach":["Duration of recent workouts in minutes","Dauer der letzten Trainings in Minuten"],"Brak zapisanego czasu treningów. Dodasz go w edytorze treningu.":["No workout duration recorded yet. You can add it in the workout editor.","Noch keine Trainingsdauer erfasst. Du kannst sie im Trainingseditor eintragen."],"kategoria":["category","Kategorie"],"godziny":["hours","Stunden"]};
 function detectLang(){
   try{var v=localStorage.getItem(LANG_KEY);if(LANGS.indexOf(v)>-1)return v;}catch(e){}
   var n=String((navigator.languages&&navigator.languages[0])||navigator.language||'en').slice(0,2).toLowerCase();
@@ -280,7 +289,7 @@ function applyTheme(t){
 }
 function sameList(a,b){return a.length===b.length&&a.every(function(x,i){return x===b[i];});}
 function metaIsDefault(){
-  var m=S.meta;if(Object.keys(S.workouts).length)return false;
+  var m=S.meta;if(Object.keys(S.workouts).length||(m.categories||[]).length)return false;
   if(m.exercises.some(function(e){return e.desc;})||Object.keys(m.cardioDesc||{}).length)return false;
   return LANGS.some(function(l){
     var de=defEx(l),dc=defCardio(l);
@@ -330,7 +339,7 @@ var clone=function(o){return JSON.parse(JSON.stringify(o));};
 
 /* ---------- state ---------- */
 var S={
-  workouts:{}, meta:{exercises:defEx(),cardio:defCardio(),cardioDesc:{}},
+  workouts:{}, meta:{exercises:defEx(),cardio:defCardio(),cardioDesc:{},categories:[]},
   ready:false, synced:false, tab:'log', editing:null, sheet:null, range:'all', open:{}, dirty:false, note:'', mode:'local'
 };
 S.descOpen={};S.descOpenList={};S.descDraft={};S.descSaved={};
@@ -396,12 +405,31 @@ var Store={
     return this.run(function(){return col.doc('meta').set(body);});
   }
 };
+var parseDur=function(v){
+  if(v==null)return null;var s=String(v).trim();if(!s)return null;
+  if(s.indexOf(':')>-1){var p=s.split(':'),h=Number(p[0]),mi=Number(p[1]||0);return isFinite(h)&&isFinite(mi)&&h+mi>0?Math.round(h*60+mi):null;}
+  var n=num(s);return n!=null&&n>0?Math.round(n):null;
+};
+var fmtDur=function(m){m=Math.round(m);return m<60?m+' min':Math.floor(m/60)+' h'+(m%60?' '+(m%60)+' min':'');};
+function catName(id){var c=((S.meta&&S.meta.categories)||[]).filter(function(x){return x.id===id;})[0];return c?c.name:'';}
+function exCat(id){var e=S.meta.exercises.filter(function(x){return x.id===id;})[0];return e&&e.cat?catName(e.cat):'';}
+/* grupy ćwiczeń wg kategorii; bez kategorii zwraca jedną grupę bez nagłówka */
+function groupByCat(list,keepEmpty){
+  var cats=S.meta.categories||[];
+  if(!cats.length)return [{cat:null,items:list,flat:true}];
+  var out=cats.map(function(c){return {cat:c,items:list.filter(function(e){return e.cat===c.id;})};});
+  var rest=list.filter(function(e){return !e.cat||!cats.some(function(c){return c.id===e.cat;});});
+  if(rest.length||keepEmpty)out.push({cat:null,items:rest});
+  return keepEmpty?out:out.filter(function(g){return g.items.length;});
+}
 function normMeta(m){
   var ex=Array.isArray(m.exercises)?m.exercises.filter(function(x){return x&&x.id&&x.name;}):defEx();
   var ca=Array.isArray(m.cardio)?m.cardio.filter(Boolean):defCardio();
   var cd={};
   if(m.cardioDesc&&typeof m.cardioDesc==='object'){Object.keys(m.cardioDesc).forEach(function(k){if(typeof m.cardioDesc[k]==='string'&&m.cardioDesc[k])cd[k]=m.cardioDesc[k];});}
-  return {exercises:ex,cardio:ca,cardioDesc:cd};
+  var cats=(Array.isArray(m.categories)?m.categories:[]).filter(function(x){return x&&x.id&&x.name;}).map(function(x){return {id:String(x.id),name:String(x.name)};});
+  ex=ex.map(function(x){if(x.cat&&!cats.some(function(c){return c.id===x.cat;})){x=Object.assign({},x);delete x.cat;}return x;});
+  return {exercises:ex,cardio:ca,cardioDesc:cd,categories:cats};
 }
 
 /* ---------- data helpers ---------- */
@@ -505,7 +533,7 @@ function logHTML(){
     var v=0,sc=0;
     (w.entries||[]).forEach(function(en){validSets(en.sets).forEach(function(s){v+=s.r*s.kg;sc++;});});
     var names=(w.entries||[]).map(function(en){return exName(en.ex,en.name);}).join(' · ');
-    var meta=(w.entries||[]).length?(w.entries.length+' '+plural(w.entries.length,'ćwiczenie','ćwiczenia','ćwiczeń')+' · '+sc+' '+plural(sc,'seria','serie','serii')+' · '+fmt(v)+' kg'):'';
+    var meta=[(w.entries||[]).length?(w.entries.length+' '+plural(w.entries.length,'ćwiczenie','ćwiczenia','ćwiczeń')+' · '+sc+' '+plural(sc,'seria','serie','serii')+' · '+fmt(v)+' kg'):'',w.dur?fmtDur(w.dur):''].filter(Boolean).join(' · ');
     var cardio=(w.cardio||[]).map(function(c){
       var sp=speedOf(c);
       return '<div class="wmeta">'+esc(c.m)+(c.km!=null?' '+dispNum(c.km)+' km':'')+(c.min!=null?' · '+fmtMin(c.min)+' min':'')+(sp?' · '+fmt(sp)+' km/h':'')+'</div>';
@@ -535,6 +563,22 @@ function weekBars(ws){
   return s+'</svg>';
 }
 
+function durBars(list){
+  var n=list.length,W=320,H=130,pb=22,pt=24,step=32,x0=(W-n*step)/2+step/2;
+  var vals=list.map(function(w){return w.dur;});
+  var mx=Math.max.apply(null,vals),mn=Math.min.apply(null,vals);
+  var lo=Math.max(0,mn-Math.max(10,(mx-mn)*.25)),hi=mx+Math.max(5,(mx-mn)*.1);
+  var yOf=function(v){return H-pb-6-(v-lo)/(hi-lo)*(H-pb-pt-6);};
+  var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(t('Czas trwania ostatnich treningów w minutach'))+'">';
+  s+='<line class="base" x1="0" x2="'+W+'" y1="'+(H-pb)+'" y2="'+(H-pb)+'"/>';
+  var pts=list.map(function(w,i){return (x0+i*step).toFixed(1)+','+yOf(w.dur).toFixed(1);});
+  if(n>1)s+='<polyline class="ln" points="'+pts.join(' ')+'"/>';
+  list.forEach(function(w,i){
+    var cx=x0+i*step,cy=yOf(w.dur),cur=i===n-1;
+    s+='<circle class="dot'+(cur?' cur':'')+'" cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+(cur?4.5:3.5)+'"/><text class="v" x="'+cx.toFixed(1)+'" y="'+(cy-9).toFixed(1)+'">'+w.dur+'</text><text class="w" x="'+cx.toFixed(1)+'" y="'+(H-7)+'">'+dm(w.date)+'</text>';
+  });
+  return s+'</svg>';
+}
 function dayDetail(d){
   var ws=allWorkouts().filter(function(w){return w.date===d;});
   var title=wdName(d)+' '+dm(d)+'.'+parseD(d).getFullYear();
@@ -543,6 +587,7 @@ function dayDetail(d){
   }
   return ws.map(function(w){
     var out='<div class="card caldet"><h3>'+esc(title)+'</h3>';
+    if(w.dur)out+='<p class="wmeta">'+esc(t('Czas treningu: {v}',{v:fmtDur(w.dur)}))+'</p>';
     if(w.note)out+='<p class="wnote">'+esc(w.note)+'</p>';
     (w.cardio||[]).forEach(function(c){
       var sp=speedOf(c);
@@ -612,6 +657,14 @@ function statsHTML(){
 
   out+='<section class="sec"><h2>'+esc(t('Treningi w tygodniach'))+'</h2><div class="card">'+weekBars(ws)+'</div></section>';
 
+  var dl=inR.filter(function(w){return w.dur>0;}).sort(function(a,b){return a.date<b.date?-1:1;});
+  out+='<section class="sec"><h2>'+esc(t('Czas treningu'))+'</h2>';
+  if(!dl.length){out+='<p class="small muted">'+esc(t('Brak zapisanego czasu treningów. Dodasz go w edytorze treningu.'))+'</p></section>';}
+  else{
+    var dsum=0,dmax=0;dl.forEach(function(w){dsum+=w.dur;if(w.dur>dmax)dmax=w.dur;});
+    out+='<div class="card">'+durBars(dl.slice(-10))+'<p class="small muted" style="margin:8px 0 0">'+esc(t('Średnio {a} · najdłuższy {m}',{a:fmtDur(dsum/dl.length),m:fmtDur(dmax)}))+'</p></div></section>';
+  }
+
   /* exercises */
   var ids={};S.meta.exercises.forEach(function(e){ids[e.id]=1;});
   ws.forEach(function(w){(w.entries||[]).forEach(function(en){ids[en.ex]=1;});});
@@ -621,8 +674,15 @@ function statsHTML(){
   }).filter(Boolean).sort(function(a,b){
     return a.last.date<b.last.date?1:a.last.date>b.last.date?-1:exName(a.id).localeCompare(exName(b.id),LOC[LANG]);
   });
-  out+='<section class="sec"><h2>'+esc(t('Ćwiczenia'))+'</h2><div class="stack">';
-  rows.forEach(function(r){
+  out+='<section class="sec"><h2>'+esc(t('Ćwiczenia'))+'</h2>';
+  var gcats=S.meta.categories||[];
+  var catOfEx=function(id){var e=S.meta.exercises.filter(function(x){return x.id===id;})[0];return e&&e.cat&&gcats.some(function(c){return c.id===e.cat;})?e.cat:'';};
+  var groups=gcats.map(function(c){return {name:c.name,rows:rows.filter(function(r){return catOfEx(r.id)===c.id;})};});
+  groups.push({name:t('Bez kategorii'),rows:rows.filter(function(r){return catOfEx(r.id)==='';})});
+  groups.forEach(function(g){
+  if(!g.rows.length)return;
+  out+=(gcats.length?'<div class="cathead">'+esc(g.name)+'</div>':'')+'<div class="stack">';
+  g.rows.forEach(function(r){
     var h=r.h,n=h.length,last=h[n-1],prev=n>1?h[n-2]:null,open=!!S.open['x'+r.id];
     var sub=t('Ostatnio {d}: {v} kg tonażu',{d:dm(last.date),v:fmt(last.ton)});
     if(prev)sub+=t(' (poprzednio {v})',{v:fmt(prev.ton)});
@@ -643,7 +703,9 @@ function statsHTML(){
     }
     out+='<div class="card"><button class="xc" data-act="toggle" data-k="x'+esc(r.id)+'" aria-expanded="'+open+'"><span class="l"><h3>'+esc(exName(r.id,last.name))+'</h3>'+badge(r.t)+'<span class="sub">'+sub+'</span>'+extra+'</span>'+spark(h.map(metric),r.t.kind==='up'?'up':r.t.kind==='down'?'down':'flat')+'</button>'+detail+'</div>';
   });
-  out+='</div></section>';
+  out+='</div>';
+  });
+  out+='</section>';
 
   /* cardio */
   var cm={};
@@ -674,10 +736,20 @@ function statsHTML(){
 function exercisesHTML(){
   var head='<header class="top"><h1>'+esc(t('Ćwiczenia'))+'</h1><p class="muted">'+esc(t('Twoja lista do wybierania w treningu'))+'</p></header>';
   var tgl=function(k,open){return '<button class="btn sm ghost" data-act="toggle-listdesc" data-k="'+esc(k)+'" aria-expanded="'+open+'" style="white-space:nowrap;padding:0 8px;font-size:14px">'+esc(open?t('Ukryj opis'):t('Pokaż opis'))+'</button>';};
-  var rows=S.meta.exercises.map(function(e,i){
-    var k='ex:'+e.id,open=!!S.descOpenList[k];
+  var hasCats=(S.meta.categories||[]).length>0;
+  var catOpts=function(cur){return '<option value="">'+esc(t('Bez kategorii'))+'</option>'+S.meta.categories.map(function(c){return '<option value="'+esc(c.id)+'"'+(c.id===cur?' selected':'')+'>'+esc(c.name)+'</option>';}).join('');};
+  var exRow=function(e){
+    var i=S.meta.exercises.indexOf(e),k='ex:'+e.id,open=!!S.descOpenList[k];
     return '<div class="card stack" style="gap:8px;padding:10px"><div class="exrow"><input class="txt" id="exn-'+i+'" data-chg="exname" data-i="'+i+'" value="'+esc(e.name)+'" maxlength="60" aria-label="'+esc(t('Nazwa ćwiczenia'))+'">'+tgl(k,open)+'<button class="btn sm ghost" data-act="del-exlist" data-i="'+i+'" style="padding:0 8px;font-size:14px">'+esc(t('Usuń'))+'</button></div>'+
+      (hasCats?'<select class="txt" data-chg="excat" data-i="'+i+'" aria-label="'+esc(t('Kategoria'))+'">'+catOpts(e.cat)+'</select>':'')+
       (open?descField(k,e.name,'exd-'+i,t('Opis ćwiczenia (np. maszyna, chwyt, ustawienie)')):'')+'</div>';
+  };
+  var rows=groupByCat(S.meta.exercises,true).map(function(g){
+    var head=g.flat?'':'<div class="cathead">'+esc(g.cat?g.cat.name:t('Bez kategorii'))+'</div>';
+    return head+g.items.map(exRow).join('');
+  }).join('');
+  var catRows=(S.meta.categories||[]).map(function(c,i){
+    return '<div class="exrow"><input class="txt" data-chg="catname" data-i="'+i+'" value="'+esc(c.name)+'" maxlength="40" aria-label="'+esc(t('Nazwa kategorii'))+'"><button class="btn sm ghost" data-act="del-cat" data-i="'+i+'" style="padding:0 8px;font-size:14px">'+esc(t('Usuń'))+'</button></div>';
   }).join('');
   var cr=S.meta.cardio.map(function(m,i){
     var k='c:'+m,open=!!S.descOpenList[k];
@@ -685,8 +757,12 @@ function exercisesHTML(){
       (open?descField(k,m,'cmd-'+i,t('Opis urządzenia (np. ustawienie, nachylenie, tempo)')):'')+'</div>';
   }).join('');
   return head+
-    '<section class="sec" style="margin-top:4px"><h2>'+esc(t('Siłownia'))+'</h2><div class="exlist">'+rows+
-    '<div class="exrow"><input class="txt" id="exn-new" placeholder="'+esc(t('Nowe ćwiczenie'))+'" maxlength="60" aria-label="'+esc(t('Nowe ćwiczenie'))+'"><button class="btn sm" data-act="add-exlist">'+esc(t('Dodaj'))+'</button></div></div>'+
+    '<section class="sec" style="margin-top:4px"><h2>'+esc(t('Kategorie'))+'</h2><div class="exlist">'+catRows+
+    '<div class="exrow"><input class="txt" id="cat-new" placeholder="'+esc(t('Nowa kategoria'))+'" maxlength="40" aria-label="'+esc(t('Nowa kategoria'))+'"><button class="btn sm" data-act="add-cat">'+esc(t('Dodaj'))+'</button></div></div>'+
+    '<p class="small muted">'+esc(t('Kategorie są opcjonalne. Pomagają pogrupować ćwiczenia, np. według partii mięśni. Usunięcie kategorii nie usuwa ćwiczeń, trafią do „Bez kategorii”.'))+'</p></section>'+
+    '<section class="sec"><h2>'+esc(t('Siłownia'))+'</h2><div class="exlist">'+rows+
+    '<div class="exrow"><input class="txt" id="exn-new" placeholder="'+esc(t('Nowe ćwiczenie'))+'" maxlength="60" aria-label="'+esc(t('Nowe ćwiczenie'))+'"><button class="btn sm" data-act="add-exlist">'+esc(t('Dodaj'))+'</button></div>'+
+    (hasCats?'<select class="txt" id="exn-cat" aria-label="'+esc(t('Kategoria'))+'">'+catOpts('')+'</select>':'')+'</div>'+
     '<p class="small muted">'+esc(t('Usunięcie z listy nie kasuje historii. Dawne treningi zostają w treningach i statystykach.'))+'</p></section>'+
     '<section class="sec"><h2>'+esc(t('Cardio'))+'</h2><div class="exlist">'+cr+
     '<div class="exrow"><input class="txt" id="cmn-new" placeholder="'+esc(t('Nowe urządzenie'))+'" maxlength="60" aria-label="'+esc(t('Nowe urządzenie'))+'"><button class="btn sm" data-act="add-cardiolist">'+esc(t('Dodaj'))+'</button></div></div></section>';
@@ -713,6 +789,11 @@ function editorHTML(){
     '<button class="btn datebtn" id="w-date" data-act="open-datepick" aria-haspopup="dialog" aria-label="'+esc(t('Zmień datę treningu'))+'">'+esc(fmtFull(w.date))+' \u25BE</button></div>';
   html+='<header class="top" style="padding-bottom:10px"><h1 id="etitle">'+esc(wdName(w.date))+' '+dm(w.date)+'</h1></header>';
   html+='<textarea class="txt" id="w-note" data-in="wnote" rows="2" placeholder="'+esc(t('Notatka do treningu, np. miałem mało czasu'))+'" aria-label="'+esc(t('Notatka do treningu'))+'">'+esc(w.note||'')+'</textarea>';
+  var dh=w.dur?Math.floor(w.dur/60):0,dmn=w.dur?w.dur%60:0,hopt='',mopt='',hi,mi;
+  for(hi=0;hi<=23;hi++)hopt+='<option value="'+hi+'"'+(hi===dh?' selected':'')+'>'+hi+' h</option>';
+  if(dh>23)hopt+='<option value="'+dh+'" selected>'+dh+' h</option>';
+  for(mi=0;mi<60;mi++)mopt+='<option value="'+mi+'"'+(mi===dmn?' selected':'')+'>'+mi+' min</option>';
+  html+='<div class="durrow"><label for="w-dur-h">'+esc(t('Czas treningu'))+'</label><select class="txt" id="w-dur-h" data-in="wdur" aria-label="'+esc(t('godziny'))+'">'+hopt+'</select><select class="txt" id="w-dur-m" data-in="wdur" aria-label="'+esc(t('minuty'))+'">'+mopt+'</select></div>';
 
   if(w.cardio.length){
     html+='<section class="sec"><h2>'+esc(t('Cardio'))+'</h2><div class="stack">';
@@ -798,9 +879,12 @@ function sheetHTML(){
   }
   list.sort(function(a,b){return (usage[b.id]||0)-(usage[a.id]||0)||a.name.localeCompare(b.name,LOC[LANG]);});
   var sel=S.sheet.sel||[];
-  var rows=list.map(function(e){
+  var pickRow=function(e){
     var u=!!used[e.id];
     return '<label class="pick"><input type="checkbox" name="pick" value="'+esc(e.id)+'"'+(u?' checked disabled':'')+(sel.indexOf(e.id)>-1?' checked':'')+'><span>'+esc(e.name)+'</span>'+(u?'<small class="muted">'+esc(t('w treningu'))+'</small>':'')+'</label>';
+  };
+  var rows=cardio?list.map(pickRow).join(''):groupByCat(list,false).map(function(g){
+    return (g.flat?'':'<div class="cathead">'+esc(g.cat?g.cat.name:t('Bez kategorii'))+'</div>')+g.items.map(pickRow).join('');
   }).join('');
   var title=cardio?t('Dodaj cardio'):t('Dodaj ćwiczenia'),ph=cardio?t('Nowe urządzenie'):t('Nowe ćwiczenie');
   return '<div class="scrim" data-act="close-sheet"></div><div class="sheet" role="dialog" aria-modal="true" aria-label="'+esc(title)+'"><div class="in">'+
@@ -845,6 +929,7 @@ function openDraft(id){
 }
 function cleanWorkout(w){
   var o={date:w.date,note:(w.note||'').trim(),cardio:[],entries:[],updated:Date.now()};
+  if(w.dur>0)o.dur=Math.round(w.dur);
   (w.cardio||[]).forEach(function(c){if(c.km!=null||c.min!=null)o.cardio.push({m:(c.m||'').trim()||'Cardio',km:c.km==null?null:c.km,min:c.min==null?null:c.min});});
   (w.entries||[]).forEach(function(en){
     var s=(en.sets||[]).filter(function(x){return x.r!=null||x.kg!=null;}).map(function(x){return {r:x.r,kg:x.kg};});
@@ -853,7 +938,7 @@ function cleanWorkout(w){
   });
   return o;
 }
-var hasContent=function(o){return !!(o.note||o.cardio.length||o.entries.length);};
+var hasContent=function(o){return !!(o.note||o.dur||o.cardio.length||o.entries.length);};
 var saveTimer=null;
 function touch(){S.dirty=true;clearTimeout(saveTimer);saveTimer=setTimeout(flush,700);setSave(t('Zapisywanie…'));}
 async function flush(){
@@ -906,16 +991,18 @@ function confirmTap(el,fn){
 function csvEscape(v){v=v==null?'':String(v);return /[";\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
 async function exportCsv(){
   var G=t('siłownia'),CA=t('cardio');
-  var rows=[[t('data'),t('typ'),t('nazwa'),t('seria'),t('powtórzenia'),'kg','km',t('minuty'),t('notatka')]];
+  var rows=[[t('data'),t('typ'),t('nazwa'),t('kategoria'),t('seria'),t('powtórzenia'),'kg','km',t('minuty'),t('notatka'),t('czas treningu (min)')]];
   allWorkouts().forEach(function(w){
+    var first=true,dur=function(){var d=first&&w.dur?w.dur:'';first=false;return d;};
     (w.entries||[]).forEach(function(en){
-      var nm=exName(en.ex,en.name);
-      if(!(en.sets||[]).length)rows.push([w.date,G,nm,'','','','','',[w.note,en.note].filter(Boolean).join(' | ')]);
-      (en.sets||[]).forEach(function(s,i){rows.push([w.date,G,nm,i+1,s.r==null?'':s.r,dispNum(s.kg),'','',i===0?[w.note,en.note].filter(Boolean).join(' | '):'']);});
+      var nm=exName(en.ex,en.name),ct=exCat(en.ex);
+      if(!(en.sets||[]).length)rows.push([w.date,G,nm,ct,'','','','','',[w.note,en.note].filter(Boolean).join(' | '),dur()]);
+      (en.sets||[]).forEach(function(s,i){rows.push([w.date,G,nm,ct,i+1,s.r==null?'':s.r,dispNum(s.kg),'','',i===0?[w.note,en.note].filter(Boolean).join(' | '):'',dur()]);});
     });
-    (w.cardio||[]).forEach(function(c){rows.push([w.date,CA,c.m,'','','',dispNum(c.km),fmtMin(c.min),w.note||'']);});
+    (w.cardio||[]).forEach(function(c){rows.push([w.date,CA,c.m,'','','','',dispNum(c.km),fmtMin(c.min),w.note||'',dur()]);});
+    if(first&&w.dur)rows.push([w.date,'','','','','','','','',w.note||'',w.dur]);
   });
-  var csv='﻿'+rows.map(function(r){return r.map(csvEscape).join(';');}).join('\r\n');
+  var csv='\uFEFF'+rows.map(function(r){return r.map(csvEscape).join(';');}).join('\r\n');
   deliver('dziennik-treningowy.csv',csv,'text/csv;charset=utf-8');
 }
 async function checkUpdate(){
@@ -1000,7 +1087,9 @@ async function importJsonText(text){
     o.workouts.forEach(function(w){if(w&&w.id&&w.date){S.workouts[w.id]=w;n++;}});
     if(o.meta){
       var m=normMeta(o.meta);
-      m.exercises.forEach(function(e){var ex=S.meta.exercises.filter(function(x){return x.id===e.id;})[0];if(!ex)S.meta.exercises.push(e);else if(!ex.desc&&e.desc)ex.desc=e.desc;});
+      S.meta.categories=S.meta.categories||[];
+      (m.categories||[]).forEach(function(c){if(!S.meta.categories.some(function(x){return x.id===c.id;}))S.meta.categories.push(c);});
+      m.exercises.forEach(function(e){var ex=S.meta.exercises.filter(function(x){return x.id===e.id;})[0];if(!ex)S.meta.exercises.push(e);else{if(!ex.desc&&e.desc)ex.desc=e.desc;if(!ex.cat&&e.cat)ex.cat=e.cat;}});
       m.cardio.forEach(function(c){if(S.meta.cardio.indexOf(c)<0)S.meta.cardio.push(c);});
       S.meta.cardioDesc=S.meta.cardioDesc||{};
       Object.keys(m.cardioDesc||{}).forEach(function(k){if(!S.meta.cardioDesc[k])S.meta.cardioDesc[k]=m.cardioDesc[k];});
@@ -1108,10 +1197,25 @@ document.addEventListener('click',function(ev){
       var inp2=$('#exn-new'),nm=inp2?inp2.value.trim():'';if(!nm)break;
       if(!S.meta.exercises.some(function(x){return x.name.toLowerCase()===nm.toLowerCase();})){
         var id2=slug(nm);while(S.meta.exercises.some(function(x){return x.id===id2;}))id2+='-'+rid();
-        S.meta.exercises.push({id:id2,name:nm});Store.saveMeta().catch(function(){});
+        var nex={id:id2,name:nm},csel=$('#exn-cat');if(csel&&csel.value)nex.cat=csel.value;
+        S.meta.exercises.push(nex);Store.saveMeta().catch(function(){});
       }
       render({keep:true});break;
     }
+    case 'add-cat':{
+      var cin=$('#cat-new'),cn=cin?cin.value.trim():'';if(!cn)break;
+      S.meta.categories=S.meta.categories||[];
+      if(!S.meta.categories.some(function(x){return x.name.toLowerCase()===cn.toLowerCase();})){
+        var cid=slug(cn)||'kat';while(S.meta.categories.some(function(x){return x.id===cid;}))cid+='-'+rid();
+        S.meta.categories.push({id:cid,name:cn});Store.saveMeta().catch(function(){});
+      }
+      render({keep:true});break;
+    }
+    case 'del-cat':confirmTap(el,function(){
+      var dc=S.meta.categories[i];if(!dc)return;
+      S.meta.exercises.forEach(function(x){if(x.cat===dc.id)delete x.cat;});
+      S.meta.categories.splice(i,1);Store.saveMeta().catch(function(){});render({keep:true});
+    });break;
     case 'del-exlist':confirmTap(el,function(){S.meta.exercises.splice(i,1);Store.saveMeta().catch(function(){});render({keep:true});});break;
     case 'add-cardiolist':{
       var inp3=$('#cmn-new'),nm3=inp3?inp3.value.trim():'';if(!nm3)break;
@@ -1132,6 +1236,7 @@ document.addEventListener('input',function(ev){
     case 'kg':w.entries[e].sets[s].kg=num(t.value);break;
     case 'enote':w.entries[e].note=t.value;break;
     case 'wnote':w.note=t.value;break;
+    case 'wdur':{var dv=Number($('#w-dur-h').value)*60+Number($('#w-dur-m').value);w.dur=dv>0?dv:null;break;}
     case 'date':if(!t.value)return;w.date=t.value;var h=$('#etitle');if(h)h.textContent=wdName(w.date)+' '+dm(w.date);break;
     case 'cm':w.cardio[c].m=t.value;break;
     case 'ckm':case 'cmin':{
@@ -1148,6 +1253,16 @@ document.addEventListener('change',function(ev){
   if(t.name==='pick'){updatePicked();return;}
   var k=t.dataset&&t.dataset.chg;if(!k)return;
   var i=Number(t.dataset.i),v=t.value.trim();
+  if(k==='excat'){
+    var xe=S.meta.exercises[i];if(!xe)return;
+    if(t.value)xe.cat=t.value;else delete xe.cat;
+    Store.saveMeta().catch(function(){});render({keep:true});return;
+  }
+  if(k==='catname'){
+    var cc=S.meta.categories[i];if(!cc)return;
+    if(!v){t.value=cc.name;return;}
+    cc.name=v;Store.saveMeta().catch(function(){});render({keep:true});return;
+  }
   if(k==='exname'){
     if(!v){t.value=S.meta.exercises[i].name;return;}
     S.meta.exercises[i].name=v;Store.saveMeta().catch(function(){});
